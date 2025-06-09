@@ -9,6 +9,7 @@ export const baseUrl = "";
 const user = `${url}/user`;
 const admin = `${url}/admin`;
 const property = `${url}/property`;
+const contact = `${url}/contact`;
 const propertyUser = `${url}/propertyUser`;
 const cashWallet = `${url}/wallet`;
 
@@ -87,5 +88,8 @@ export const api_configs = {
   /////////////////////////////////////////////////////////////////////////////////
 
   listPropertiesUser: `${property}/listPropertiesUser`,
-  getPropertyById: `${property}/getPropertyById`
+  getPropertyById: `${property}/getPropertyById`,
+
+  createContactUs: `${contact}/createContactUs`,
+  listPublicBlogs: `${admin}/listPublicBlogs`
 };

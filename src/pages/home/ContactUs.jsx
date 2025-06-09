@@ -5,25 +5,82 @@ import {
   Grid,
   Typography,
   TextField,
-  Select,
-  MenuItem,
   Button,
   Paper,
 } from "@mui/material";
 import ScrollAnimation from "react-animate-on-scroll";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { apiRouterCall } from "@/api-services/service";
+import toast from "react-hot-toast";
+
 export default function ContactUs() {
   const [formType, setFormType] = useState("quiry");
-  const [inquiry, setInquiry] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleFormTypeChange = (event, newType) => {
-    if (newType !== null) setFormType(newType);
-  };
+ const handleSubmit = async (values, formikHelpers) => {
+  setIsSubmitting(true);
+  try {
+    setLoading(true);
+
+    const bodyData = {
+      name: values.name,
+      email: values.email,
+      phoneNumber: values.phoneNumber,
+      message: values.message,
+    };
+
+    const res = await apiRouterCall({
+      method: "POST",
+      endPoint: "createContactUs",
+      bodyData,
+    });
+
+    if (res?.data?.responseCode === 200) {
+      toast.success("Your message has been sent successfully.");
+      formikHelpers.resetForm();
+    } else {
+      toast.error(res?.data?.responseMessage || "Something went wrong.");
+    }
+  } catch (err) {
+    console.error("Form submission error:", err);
+    toast.error("Server error. Please try again.");
+  } finally {
+    setIsSubmitting(false);
+    setLoading(false);
+  }
+};
+
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      phoneNumber: "",
+      message: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .max(60, "Name must be at most 60 characters")
+        .required("Please enter name."),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Please enter email."),
+      phoneNumber: Yup.string()
+        .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
+        .required("Please enter phone number."),
+      message: Yup.string().required("Please enter message."),
+    }),
+      onSubmit: (values, formikHelpers) => handleSubmit(values, formikHelpers),
+
+  });
 
   return (
     <Box
       sx={{
         minHeight: "80vh",
-        backgroundImage: 'url("/images/Contact/contact_bg.jpg")', // Place your background image in public/
+        backgroundImage: 'url("/images/Contact/contact_bg.jpg")',
         backgroundSize: "cover",
         backgroundPosition: "center",
         display: "flex",
@@ -61,51 +118,79 @@ export default function ContactUs() {
           </ScrollAnimation>
         </Box>
 
-        <Grid container spacing={2} mt={2}>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="Your Name"
-              InputProps={{ disableUnderline: true }}
-            />
+        <form onSubmit={formik.handleSubmit}>
+          <Grid container spacing={2} mt={2}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Your Name"
+                name="name"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+                InputProps={{ disableUnderline: true }}
+                inputProps={{ maxLength: 60 }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                placeholder="Email"
+                variant="outlined"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                placeholder="Phone Number*"
+                variant="outlined"
+                name="phoneNumber"
+                value={formik.values.phoneNumber}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
+                helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                placeholder="Message"
+                variant="outlined"
+                multiline
+                rows={2}
+                name="message"
+                value={formik.values.message}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.message && Boolean(formik.errors.message)}
+                helperText={formik.touched.message && formik.errors.message}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField fullWidth placeholder="Email" variant="outlined" />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              placeholder="Phone Number*"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-          <Select
-  fullWidth
-  value={inquiry}
-  onChange={(e) => setInquiry(e.target.value)}
-  displayEmpty
-  variant="outlined"
->
-  <MenuItem value="" disabled>
-    Select
-  </MenuItem>
-  <MenuItem value="residential">Residential</MenuItem>
-  <MenuItem value="commercial">Commercial</MenuItem>
-  <MenuItem value="other">Other</MenuItem>
-</Select>
 
-          </Grid>
-        </Grid>
+          <Typography variant="body2" color="#808080" mt={2} mb={2}>
+            We're excited to connect with you! <br />
+          </Typography>
 
-        <Typography variant="body2" color="#808080" mt={2} mb={2}>
-          We're excited to connect with you! <br />
-        </Typography>
-
-        <Button variant="contained" color="secondary">
-          Get A Call Back
-        </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            disabled={isSubmitting || loading}
+          >
+            {loading ? "Submitting..." : "Get A Call Back"}
+          </Button>
+        </form>
       </Paper>
     </Box>
   );

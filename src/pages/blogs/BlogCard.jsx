@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Stack } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -22,7 +22,7 @@ export default function BlogCard({ image, title, date, description, slug }) {
           position: "relative",
           width: "100%",
           height: 200,
-          overflow: "hidden", // ensures image doesn't spill on scale
+          overflow: "hidden",
           "& .blog-image": {
             transition: "transform 0.4s ease",
           },
@@ -56,18 +56,20 @@ export default function BlogCard({ image, title, date, description, slug }) {
           color="text.secondary"
           sx={{ mb: 2 }}
           lineHeight="25px"
-        >
-          {description.length > 100
-            ? description.slice(0, 100) + "..."
-            : description}
-        </Typography>
+          dangerouslySetInnerHTML={{
+            __html:
+              description.length > 100
+                ? description.slice(0, 100) + "..."
+                : description,
+          }}
+        />
 
         <Button
           variant="contained"
           color="secondary"
           size="small"
           style={{ padding: "8px 18px", fontSize: "10px" }}
-          onClick={() => router.push(`/bogs-details`)} // Correct placement of onClick
+          onClick={() => router.push(`/bogs-details`)}
         >
           Read More
         </Button>
