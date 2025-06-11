@@ -1,0 +1,224 @@
+@media (max-width: 1539px) {
+  .MuiContainer-root {
+    // max-width: 1450px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .contentBoxMain {
+    align-items: flex-end !important;
+  }
+
+  .straIcon2 {
+    right: -162px;
+    bottom: 0;
+  }
+
+  .straIcon3 {
+    right: -221px;
+    bottom: -3px;
+    top: -50px;
+    transform: rotate(341deg);
+  }
+}
+@media (max-width: 1200px) {
+  .videoText {
+    display: none;
+  }
+}
+@media (max-width: 991px) {
+  MuiAppBar-root {
+    background-color: #fff !important;
+    box-shadow: none;
+  }
+
+  .menuHandle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .menuButton {
+    font-size: 31.9px !important;
+    font-family: "Megum";
+    font-weight: 500 !important;
+    line-height: 27.12px;
+  }
+
+  .menuButton::after {
+    display: none;
+  }
+    .dropdownWrapper{
+    width: 100%;
+  }
+  .landing-about {
+    margin-top: 90px;
+}
+.dropdownContent{
+      width: 87%;
+}
+
+.filterContainer{
+  flex-wrap: wrap;
+}
+.dropdownHeader{
+  padding: 15px 15px 0px;
+}
+.serchCustom{
+  width: 100%;
+}
+.teamGridBox{
+ grid-template-columns: repeat(3, 1fr) !important;
+}
+}
+
+@media (max-width: 767px) {
+  .filtermarket {
+    padding-top: 100px !important;
+    padding-bottom: 21px;
+  }
+
+.teamGridBox{
+  grid-template-columns: repeat(1, 1fr) !important;
+}
+  .main-sectionGap {
+    margin-top: 62px;
+  }
+  .aboutusbanner {
+    padding: 0px;
+  }
+  .imageright {
+    display: none;
+  }
+  .aboutfooterSection {
+    gap: 20px;
+    padding: 20px;
+  }
+  .MuiAppBar-root {
+    padding: 0px !important;
+  }
+  .splitText {
+    font-size: 30px;
+    line-height: 50px;
+  }
+
+  .sectiongap-main {
+    margin-top: 50px !important;
+  }
+
+  .bannerlanding {
+    // padding-top: 122px;
+  }
+
+  .totalImage {
+    margin-top: 105px;
+    margin-right: -89px;
+    max-width: 89px !important;
+  }
+
+  .totalimage1 {
+    max-width: 111px !important;
+    margin-left: -128px;
+    margin-top: 33px;
+  }
+
+  .headerText1 {
+    font-size: 17px !important;
+    font-weight: 400 !important;
+  }
+
+  .whoGridBox {
+    display: none !important;
+  }
+
+  .BorderFooter {
+    padding: 15px;
+  }
+
+  .socialArrow {
+    right: 5px;
+    top: 33px;
+  }
+
+  .straIcon {
+    position: absolute;
+    left: 20px;
+    /* top: 35px; */
+    /* width: 54px; */
+    height: 54px;
+  }
+
+  .lifeeBox {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .staButton {
+    min-width: 87px;
+  }
+
+  .strategyCardBox {
+    font-size: 33px !important;
+    font-weight: 600 !important;
+    max-width: 100%;
+    line-height: 38px !important;
+  }
+
+  .geneatedText {
+    font-size: 22px !important;
+    line-height: 36.72px !important;
+  }
+
+  .marginTopSection {
+    margin-top: 43px;
+  }
+  .propert-details {
+    padding: 13px;
+  }
+  .getText {
+    font-size: 14px;
+    line-height: 23px;
+}
+.subSection {
+    margin-bottom: 20px;
+}
+.digitalIcon {
+      width: 20px;
+    height: 20px;
+
+}
+.digitalText1{
+  font-size: 11px !important;
+  font-weight: 400;
+}
+}
+
+@media (max-width: 600px) {
+  .centerborderfooter::before {
+    position: absolute;
+    width: 89%;
+    height: 1px;
+    right: 0;
+    top: 106%;
+    left: 30px;
+    content: "";
+    background: rgba(255, 255, 255, 0.2196078431);
+}
+.footercopy{
+      margin-top: 32px;
+    padding-top: 19px;
+}
+.maifootersection{
+      padding-top: 43px;
+    padding-bottom: 23px;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+}
+}
+
+@media (max-width: 479px) {
+}
