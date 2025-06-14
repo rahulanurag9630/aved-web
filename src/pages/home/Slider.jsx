@@ -151,7 +151,13 @@ const Slider = () => {
                 {item?.overview}
               </Typography>
             </ScrollAnimation>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" onClick={() => router.push({ pathname: `/property-details`, query: { propertyId: item?._id } })}
+              color="primary" sx={{
+                zIndex: 100,
+                position: "relative",
+                pointerEvents: "auto",
+              }} // 👈 Add this line
+            >
               Learn More
             </Button>
           </Box>
