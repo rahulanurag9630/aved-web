@@ -13,6 +13,8 @@ const property = `${url}/property`;
 const propertyUser = `${url}/propertyUser`;
 const cashWallet = `${url}/wallet`;
 const staticContent = `${url}/staticContent`;
+const contact = `${url}/contact`;
+
 
 export const api_configs = {
   //admin
@@ -91,5 +93,9 @@ export const api_configs = {
   listPropertiesUser: `${property}/listPropertiesUser`,
   getPropertyById: `${property}/getPropertyById`,
   createView: `${property}/createView`,
-  getStaticContentByType: `${staticContent}/getAllStaticContentByType`
+  getStaticContentByType: `${staticContent}/getAllStaticContentByType`,
+  createContactUs: `${contact}/createContactUs`,
+  listPublicBlogs: `${admin}/listPublicBlogs`,
+  publicList: `${admin}/publicList`,
+  getBlogById: `${admin}/getBlogById`,
 };
