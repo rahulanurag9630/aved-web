@@ -7,11 +7,22 @@ import {
   IconButton,
 } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import NextLink from "next/link";
+
 const socialLinks = [
   { name: "Facebook", href: "https://www.facebook.com/realestate.aved" },
-  { name: "Instagram", href: "https://www.instagram.com/avedrealestate/?igsh=ZXN6cHc5MHRzMnRt#" },
-  { name: "Linkedin", href: "https://www.linkedin.com/company/avedrealestate/?viewAsMember=true" },
-  { name: "Twitter", href: "https://x.com/avedrealestate?s=21&t=G6uZG2bWUKQ6oFJAJl8YNAhttps://x.com/avedrealestate?s=21&t=G6uZG2bWUKQ6oFJAJl8YNA" },
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/avedrealestate/?igsh=ZXN6cHc5MHRzMnRt#",
+  },
+  {
+    name: "Linkedin",
+    href: "https://www.linkedin.com/company/avedrealestate/?viewAsMember=true",
+  },
+  {
+    name: "Twitter",
+    href: "https://x.com/avedrealestate?s=21&t=G6uZG2bWUKQ6oFJAJl8YNAhttps://x.com/avedrealestate?s=21&t=G6uZG2bWUKQ6oFJAJl8YNA",
+  },
 ];
 
 export default function NewFooter() {
@@ -72,9 +83,11 @@ export default function NewFooter() {
                     variant="body2"
                     mb={0.5}
                   >
-                    <Link href={item.href} underline="hover" color="inherit">
-                      {item.label}
-                    </Link>
+                    <NextLink href={item.href} passHref legacyBehavior>
+                      <Link underline="hover" color="inherit">
+                        {item.label}
+                      </Link>
+                    </NextLink>
                   </Typography>
                 ))}
               </Grid>
@@ -100,9 +113,11 @@ export default function NewFooter() {
                     color="#fff"
                     mb={0.5}
                   >
-                    <Link href={item.href} underline="hover" color="inherit">
-                      {item.label}
-                    </Link>
+                    <NextLink href={item.href} passHref legacyBehavior>
+                      <Link underline="hover" color="inherit">
+                        {item.label}
+                      </Link>
+                    </NextLink>
                   </Typography>
                 ))}
               </Grid>
@@ -158,7 +173,13 @@ export default function NewFooter() {
         </Grid>
 
         {/* Footer Bottom */}
-        <Box mt={6} pt={3} borderTop="1px solid #eeeeee2b" textAlign="center" className="footercopy">
+        <Box
+          mt={6}
+          pt={3}
+          borderTop="1px solid #eeeeee2b"
+          textAlign="center"
+          className="footercopy"
+        >
           <Typography variant="body2" color="#fff">
             © 2025 <strong>Aved</strong>. All Rights Reserved.
           </Typography>
@@ -172,7 +193,6 @@ export default function NewFooter() {
             right: 30,
             bgcolor: "#fff",
             boxShadow: 2,
-            // "&:hover": { bgcolor: "#e0e000" },
           }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
