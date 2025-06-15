@@ -117,7 +117,7 @@ const Slider = () => {
           height="750"
         />
 
-        {/* <Box className="gradientOverlay" /> */}
+        <Box className="gradientOverlay" />
 
         <Container>
           <Box className="slide-caption">

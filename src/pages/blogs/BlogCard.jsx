@@ -2,7 +2,22 @@ import { Box, Typography, Button, Stack } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function BlogCard({ image, title, date, description, slug }) {
+export default function BlogCard({ image, title, date, description, slug, id }) {
+  function getTextSnippetFromHTML(html, limit = 65) {
+    if (!html) return "";
+
+    // Create a temporary DOM element to extract plain text
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+
+    const plainText = tempDiv.textContent || tempDiv.innerText || "";
+
+    // Trim and limit to `limit` characters
+    return plainText.length > limit
+      ? plainText.substring(0, limit).trim() + "..."
+      : plainText.trim();
+  }
+
   const router = useRouter();
   return (
     <Box
@@ -56,18 +71,19 @@ export default function BlogCard({ image, title, date, description, slug }) {
           color="text.secondary"
           sx={{ mb: 2 }}
           lineHeight="25px"
-        >
-          {description.length > 100
-            ? description.slice(0, 100) + "..."
-            : description}
-        </Typography>
+          dangerouslySetInnerHTML={{
+            __html:
+              getTextSnippetFromHTML(description, 100)
+          }}
+        />
+
 
         <Button
           variant="contained"
           color="secondary"
           size="small"
           style={{ padding: "8px 18px", fontSize: "10px" }}
-          onClick={() => router.push(`/bogs-details`)} // Correct placement of onClick
+          onClick={() => router.push({ pathname: `/bogs-details`, query: { id } })} // Correct placement of onClick
         >
           Read More
         </Button>

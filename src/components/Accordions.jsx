@@ -14,7 +14,7 @@ const Accordions = ({ data, index, expandedIndexes, toggleAccordion }) => {
   const theme = useTheme(); // Access Material-UI theme
   const { question, answer } = data;
 
- const currentLang =  i18n.language;
+  const currentLang = i18n.language;
 
   const styles = {
     mainBox: {
@@ -45,7 +45,7 @@ const Accordions = ({ data, index, expandedIndexes, toggleAccordion }) => {
       fontWeight: 500,
       lineHeight: "30px",
       fontFamily: '"Raleway", serif',
-      textAlign: currentLang ==="en" ? "left" : "right",
+      textAlign: currentLang === "en" ? "left" : "right",
       color: "rgba(106, 106, 106, 1)", // Updated to theme color
 
       "& ol": {
@@ -106,7 +106,7 @@ const Accordions = ({ data, index, expandedIndexes, toggleAccordion }) => {
           <AccordionDetails>
             <Box
               sx={styles.accordionAns} // Updated to use sx
-              dangerouslySetInnerHTML={{ __html: data.answer }}
+              dangerouslySetInnerHTML={{ __html: answer }}
             />
           </AccordionDetails>
         </Accordion>
