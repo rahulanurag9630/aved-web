@@ -134,7 +134,7 @@ const Slider = () => {
               height="28px"
               className="slide-badge"
             />
-            <ScrollAnimation animateIn="slideInUp">
+            <ScrollAnimation animateIn="slideInUp" animateOnce={true} initiallyVisible={true}>
               <Typography
                 variant="h2"
                 color="#fff"
@@ -151,6 +151,7 @@ const Slider = () => {
                 {item?.overview}
               </Typography>
             </ScrollAnimation>
+
             <Button variant="contained" onClick={() => router.push({ pathname: `/property-details`, query: { propertyId: item?._id } })}
               color="primary" sx={{
                 zIndex: 100,
