@@ -2571,7 +2571,7 @@ svg:not(:root) {
 }
 
 .featuresItem {
-  background: #5c4d44;
+  /* background: #5c4d44; */
   padding: 4px;
   width: 30px;
   border-radius: 8px;

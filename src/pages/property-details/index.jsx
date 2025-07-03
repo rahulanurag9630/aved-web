@@ -16,6 +16,7 @@ import FloorPlanTabs from "./FloorPlanTabs";
 import { apiRouterCall } from "@/api-services/service";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Landmarks from "./LandmarkTabs";
 
 const AboutUSBox = styled("Box")(({ theme }) => ({
   "& .aboutBannerImage": {
@@ -136,6 +137,7 @@ export default function PropertyDetails() {
           <Overview data={property} />
           <PropertyMediaSection data={property} />
           <FloorPlanTabs data={property} />
+          <Landmarks data={property} />
           <Box mt={6}>
             <Typography variant="h3" fontWeight={600} gutterBottom mb={3}>
               Related Listings
