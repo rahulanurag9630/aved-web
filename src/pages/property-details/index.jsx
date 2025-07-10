@@ -85,7 +85,7 @@ export default function PropertyDetails() {
         <Container style={{ position: "relative", zIndex: "999" }}>
           <Box className="headingBox">
             <Typography variant="h1" color="#fff">
-              Property Details
+              {property?.property_name}
             </Typography>
           </Box>
 

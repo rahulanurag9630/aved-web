@@ -77,7 +77,7 @@ const PropertyCard = ({ property }) => {
   const hasPrice = property?.price_min && property?.price_max;
 
   return (
-    <Grid item xs={12} sm={6} md={4} style={{ cursor: "pointer" }}>
+    <Grid item xs={12} sm={6} md={6} style={{ cursor: "pointer" }}>
       <Box sx={{ position: "relative" }}>
         {hasImages && (
           <Carousel responsive={responsive} infinite autoPlay={false} autoPlaySpeed={3000}>
@@ -260,19 +260,20 @@ const PropertyCarousel = ({ filterOptions }) => {
         <NoProperties />
       ) : (
         <>
-          <Grid container spacing={3}>
+          <Grid container spacing={10}>
             {properties.map((property) => (
               <PropertyCard key={property._id} property={property} />
             ))}
           </Grid>
           <Box mt={5} className="dislayCenter">
-            <Pagination
-              count={pagination.pages}
-              page={pagination.page}
-              onChange={handlePageChange}
-              showFirstButton
-              showLastButton
-            />
+            {pagination.pages > 1 &&
+              <Pagination
+                count={pagination.pages}
+                page={pagination.page}
+                onChange={handlePageChange}
+                showFirstButton
+                showLastButton
+              />}
           </Box>
         </>
       )}

@@ -84,7 +84,7 @@ export default function Blog() {
         <Container style={{ position: "relative", zIndex: "999" }}>
           <Box className="headingBox">
             <Typography variant="h1" color="#fff">
-              Blog
+              News & Updates
             </Typography>
           </Box>
 

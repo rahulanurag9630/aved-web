@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ScrollAnimation from "react-animate-on-scroll";
 import { apiRouterCall } from "@/api-services/service";
 import { useRouter } from "next/router";
+import Loader from "@/components/PageLoader/Loader";
 
 const bannerData = {
   desktop: [
@@ -148,7 +149,9 @@ const Slider = () => {
                 color="#fff"
                 className="bannerDescriptionText"
               >
-                {item?.overview}
+                {item?.overview?.length > 180
+                  ? item.overview.substring(0, 180) + "..."
+                  : item?.overview}
               </Typography>
             </ScrollAnimation>
 
@@ -168,15 +171,20 @@ const Slider = () => {
 
   return (
     <Box className="sliderHomepage" style={{ position: "relative", zIndex: "999" }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <SlickSlider {...sliderSettings}>
-            {renderSlides(data)}
-          </SlickSlider>
+      {loading ? (
+        <Loader /> // 👈 your custom loader component
+      ) : (
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <SlickSlider {...sliderSettings}>
+              {renderSlides(data)}
+            </SlickSlider>
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </Box>
   );
+
 };
 
 export default Slider;
