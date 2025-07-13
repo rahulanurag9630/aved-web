@@ -6,6 +6,9 @@ import "slick-carousel/slick/slick-theme.css";
 import ScrollAnimation from "react-animate-on-scroll";
 import { apiRouterCall } from "@/api-services/service";
 import { useRouter } from "next/router";
+import Loader from "@/components/PageLoader/Loader";
+import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 
 const bannerData = {
   desktop: [
@@ -71,6 +74,9 @@ const Slider = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { t } = useTranslation();
+  console.log(i18n.language)
+
 
   const handleSearch = async () => {
     setLoading(true);
@@ -120,27 +126,39 @@ const Slider = () => {
         <Box className="gradientOverlay" />
 
         <Container>
-          <Box className="slide-caption">
-            <img
-              src="/images/Slider/GP-LOGO-2.png"
-              width="151px"
-              height="40px"
-              className="slideTopLogo"
-            />
-            <img
-              src="/images/Slider/NEWLY_LAUNCHED_EN.svg"
-              alt="Newly Launched"
-              width="163px"
-              height="28px"
-              className="slide-badge"
-            />
+          <Box className="slide-caption" sx={{ right: i18n.language === "ar" ? "2.5%" : null }}>
+            <div style={{ float: i18n.language === "ar" ? "right" : null, }}>
+              <img
+                src="/images/Slider/GP-LOGO-2.png"
+                width="151px"
+                height="40px"
+                className="slideTopLogo"
+              />
+              <img
+                src="/images/Slider/NEWLY_LAUNCHED_EN.svg"
+                alt="Newly Launched"
+                width="163px"
+                height="28px"
+
+                className="slide-badge"
+              />
+            </div>{i18n.language === "ar" && (
+              <>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+              </>
+            )}
+
             <ScrollAnimation animateIn="slideInUp" animateOnce={true} initiallyVisible={true}>
               <Typography
                 variant="h2"
                 color="#fff"
                 className="bannerHeadingText"
               >
-                {item?.property_name}
+                {i18n.language === "en" ? item?.property_name : item?.property_name_ar}
               </Typography>
               <Typography
                 variant="body2"
@@ -148,7 +166,14 @@ const Slider = () => {
                 color="#fff"
                 className="bannerDescriptionText"
               >
-                {item?.overview}
+                {i18n.language === "en"
+                  ? item?.overview?.length > 180
+                    ? item.overview.substring(0, 180) + "..."
+                    : item?.overview
+                  : item?.overview_ar?.length > 180
+                    ? item.overview_ar.substring(0, 180) + "..."
+                    : item?.overview_ar}
+
               </Typography>
             </ScrollAnimation>
 
@@ -159,7 +184,7 @@ const Slider = () => {
                 pointerEvents: "auto",
               }} // 👈 Add this line
             >
-              Learn More
+              {t("learn_more")}
             </Button>
           </Box>
         </Container>
@@ -168,15 +193,20 @@ const Slider = () => {
 
   return (
     <Box className="sliderHomepage" style={{ position: "relative", zIndex: "999" }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <SlickSlider {...sliderSettings}>
-            {renderSlides(data)}
-          </SlickSlider>
+      {loading ? (
+        <Loader /> // 👈 your custom loader component
+      ) : (
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <SlickSlider {...sliderSettings}>
+              {renderSlides(data)}
+            </SlickSlider>
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </Box>
   );
+
 };
 
 export default Slider;

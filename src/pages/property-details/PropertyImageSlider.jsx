@@ -4,6 +4,7 @@ import { Box, CardMedia, Container, Typography } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaLocationDot } from "react-icons/fa6";
+import i18n from "@/i18n";
 
 const propertyImages = [
   "/images/Project/pro_1.jpg",
@@ -52,7 +53,7 @@ export default function PropertyImageSlider({ data }) {
       {/* Main Slider */}
       <Box mb={2}>
         <Typography variant="h3" fontWeight={600}>
-          {data?.property_name || "NA"}
+          {i18n.language === "en" ? data?.property_name : data?.property_name_ar || "NA"}
         </Typography>
         <Box className="displayStart">
           <FaLocationDot style={{ color: "#000000a8" }} />
@@ -124,7 +125,7 @@ export default function PropertyImageSlider({ data }) {
         <Typography
           variant="body2"
           color="#404040"
-          dangerouslySetInnerHTML={{ __html: data?.detailed_description }}
+          dangerouslySetInnerHTML={{ __html: i18n.language === "en" ? data?.detailed_description : data?.detailed_description_ar }}
         />
       </Box>
 

@@ -20,6 +20,8 @@ import { TbBath, TbBallAmericanFootball } from "react-icons/tb";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { apiRouterCall } from "@/api-services/service";
+import i18n from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 // Global Loader Component
 const Loader = () => (
@@ -65,6 +67,7 @@ const NoProperties = () => (
 const PropertyCard = ({ property }) => {
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { t } = useTranslation()
 
   const responsive = {
     superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 1 },
@@ -77,7 +80,7 @@ const PropertyCard = ({ property }) => {
   const hasPrice = property?.price_min && property?.price_max;
 
   return (
-    <Grid item xs={12} sm={6} md={4} style={{ cursor: "pointer" }}>
+    <Grid item xs={12} sm={6} md={6} style={{ cursor: "pointer" }}>
       <Box sx={{ position: "relative" }}>
         {hasImages && (
           <Carousel responsive={responsive} infinite autoPlay={false} autoPlaySpeed={3000}>
@@ -113,7 +116,7 @@ const PropertyCard = ({ property }) => {
       >
         {property.property_name && (
           <Typography variant="h6" color="#222222" fontWeight="500">
-            {property.property_name}
+            {i18n.language === "en" ? property.property_name : property.property_name_ar}
           </Typography>
         )}
 
@@ -156,7 +159,7 @@ const PropertyCard = ({ property }) => {
               <Box display="flex" alignItems="center" gap={1}>
                 <TbBallAmericanFootball style={{ color: "#636363" }} />
                 <Typography variant="body2" fontWeight="600" color="#636363">
-                  {property.area_sqft} sqft
+                  {property.area_sqft} {t("sqft")}
                 </Typography>
               </Box>
             )}
@@ -260,19 +263,20 @@ const PropertyCarousel = ({ filterOptions }) => {
         <NoProperties />
       ) : (
         <>
-          <Grid container spacing={3}>
+          <Grid container spacing={10}>
             {properties.map((property) => (
               <PropertyCard key={property._id} property={property} />
             ))}
           </Grid>
           <Box mt={5} className="dislayCenter">
-            <Pagination
-              count={pagination.pages}
-              page={pagination.page}
-              onChange={handlePageChange}
-              showFirstButton
-              showLastButton
-            />
+            {pagination.pages > 1 &&
+              <Pagination
+                count={pagination.pages}
+                page={pagination.page}
+                onChange={handlePageChange}
+                showFirstButton
+                showLastButton
+              />}
           </Box>
         </>
       )}

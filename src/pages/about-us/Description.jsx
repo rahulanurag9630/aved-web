@@ -1,7 +1,8 @@
-import { Container, Grid, Typography, Button, Box } from "@mui/material";
+import { Container, Grid, Typography, Box } from "@mui/material";
 import React from "react";
 import styled from "@emotion/styled";
 import ScrollAnimation from "react-animate-on-scroll";
+import { useTranslation } from "react-i18next";
 
 const FantasticPage = styled("Box")(({ theme }) => ({
   position: "relative",
@@ -13,9 +14,6 @@ const FantasticPage = styled("Box")(({ theme }) => ({
       lineHeight: "35px",
     },
   },
-  "& p": {
-    // maxWidth: "550px",
-  },
   "& img": {
     [theme.breakpoints.down("sm")]: {
       width: "auto",
@@ -26,6 +24,8 @@ const FantasticPage = styled("Box")(({ theme }) => ({
 }));
 
 export default function Description() {
+  const { t } = useTranslation();
+
   return (
     <FantasticPage>
       <Container maxWidth="lg" className="marginTopSection">
@@ -37,7 +37,7 @@ export default function Description() {
                 color="#000"
                 style={{ textTransform: "uppercase" }}
               >
-                Shaping the world of things to come
+                {t("description_title")}
               </Typography>
             </ScrollAnimation>
           </Grid>
@@ -45,15 +45,11 @@ export default function Description() {
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <ScrollAnimation animateIn="slideInRight">
               <Typography variant="h3" color="#000" mb={2} mt={2}>
-                We’d love to share more with you, please complete this form and
-                our dedicated team will get back to you shortly.
+                {t("description_subtitle")}
               </Typography>
 
               <Typography variant="body2" color="secondary" mb={2} mt={2}>
-                In markets from renewable energy, sports and entertainment, to
-                data centers and healthcare, we work to ensure the built
-                environment leaves a lasting positive impact. Together, we
-                strive to make your project better than you imagined possible.
+                {t("description_paragraph")}
               </Typography>
             </ScrollAnimation>
           </Grid>

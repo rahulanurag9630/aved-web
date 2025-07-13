@@ -7,8 +7,8 @@ const Loader = () => {
     alignItems: "center",
 
     // padding: "0% 400%",
-    height: "51vh", // Full screen height
-    width: "80vw",
+    height: "100vh", // Full screen height
+    width: "100vw",
     backgroundColor: "#f9f9f9", // Optional background color
   };
 

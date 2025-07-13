@@ -119,11 +119,11 @@ const FaqManin = () => {
             ))}
           </Grid>
         </Grid>
-        <Box align="center" mt={2}>
+        {/* <Box align="center" mt={2}>
           <Button variant="contained" color="secondary">
             Read more
           </Button>
-        </Box>
+        </Box> */}
       </Container>
     </StyledFaqSection>
   );

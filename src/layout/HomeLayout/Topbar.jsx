@@ -133,35 +133,35 @@ export default function Header() {
     "& .marginZero": {
       marginLeft: "0px !important",
     },
- menuStyles: {
-  fontSize: "12px !important",
-  color: "#fff",
-  textTransform: "uppercase",
-  letterSpacing: "1.2px",
-  fontFamily: '"Lato", sans-serif',
-  position: "relative",
-  "&::after": {
-    content: '""',
-    position: "absolute",
-    bottom: "-5px",
-    left: 0,
-    right: 0,
-    margin: "0 auto",
-    width: "50%",
-    height: "1px",
-    backgroundColor: "#fff",
-    transform: "scaleX(0)",
-    transformOrigin: "center",
-    transition: "transform 0.3s ease",
-  },
-  "&:hover::after": {
-    transform: "scaleX(1)",
-  },
+    menuStyles: {
+      fontSize: "12px !important",
+      color: "#fff",
+      textTransform: "uppercase",
+      letterSpacing: "1.2px",
+      fontFamily: '"Lato", sans-serif',
+      position: "relative",
+      "&::after": {
+        content: '""',
+        position: "absolute",
+        bottom: "-5px",
+        left: 0,
+        right: 0,
+        margin: "0 auto",
+        width: "50%",
+        height: "1px",
+        backgroundColor: "#fff",
+        transform: "scaleX(0)",
+        transformOrigin: "center",
+        transition: "transform 0.3s ease",
+      },
+      "&:hover::after": {
+        transform: "scaleX(1)",
+      },
 
-  "&.active::after": {
-    transform: "scaleX(1)",
-  },
-},
+      "&.active::after": {
+        transform: "scaleX(1)",
+      },
+    },
 
     menuButton: {
       backgroundColor: "#5c4d44",
@@ -211,7 +211,7 @@ export default function Header() {
     }
   };
   const [scrolled, setScrolled] = useState(false);
-const currentRoute = router.pathname;
+  const currentRoute = router.pathname;
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -258,7 +258,7 @@ const currentRoute = router.pathname;
               <Box className="" sx={{ display: { xs: "none", md: "flex" } }}>
                 <Button
                   color="inherit"
-                   className={currentRoute === "/" ? "active" : ""}
+                  className={currentRoute === "/" ? "active" : ""}
                   onClick={() => {
                     // scrollToSection("ecosystem");
                     router.push("/");
@@ -275,8 +275,8 @@ const currentRoute = router.pathname;
                 <Button
                   color="inherit"
                   // onClick={() => scrollToSection("ourcompany")}
-                   className={currentRoute === "/about-us" ? "active" : ""}
-                   onClick={() => router.push("/about-us")}
+                  className={currentRoute === "/about-us" ? "active" : ""}
+                  onClick={() => router.push("/about-us")}
                   sx={{
                     ...styles.menuStyles,
                     fontSize: "12px",
@@ -288,8 +288,8 @@ const currentRoute = router.pathname;
                 <Button
                   color="inherit"
                   // onMouseOver={handleMenuOpen}
-                   className={currentRoute === "/project" ? "active" : ""}
-                   onClick={() => router.push("/project")}
+                  className={currentRoute === "/project" ? "active" : ""}
+                  onClick={() => router.push("/project")}
                   // onClick={() => scrollToSection("whychooseus")}
                   sx={{
                     ...styles.menuStyles,
@@ -301,8 +301,8 @@ const currentRoute = router.pathname;
                 </Button>
                 <Button
                   color="inherit"
-                   className={currentRoute === "/blogs" ? "active" : ""}
-                   onClick={() => router.push("/blogs")}
+                  className={currentRoute === "/blogs" ? "active" : ""}
+                  onClick={() => router.push("/blogs")}
                   // onClick={() => scrollToSection("insurance")}
                   sx={{
                     ...styles.menuStyles,
@@ -312,10 +312,10 @@ const currentRoute = router.pathname;
                 >
                   {t("blogs")}
                 </Button>
-                 <Button
+                <Button
                   color="inherit"
-                   className={currentRoute === "/contact-us" ? "active" : ""}
-                   onClick={() => router.push("/contact-us")}
+                  className={currentRoute === "/contact-us" ? "active" : ""}
+                  onClick={() => router.push("/contact-us")}
                   // onClick={() => scrollToSection("insurance")}
                   sx={{
                     ...styles.menuStyles,
@@ -327,7 +327,7 @@ const currentRoute = router.pathname;
                 </Button>
               </Box>
 
-          
+
             </Box>
 
             <Box className="displayStart" style={{ gap: "20px" }}>
@@ -389,7 +389,7 @@ const currentRoute = router.pathname;
                   <span className="videoTexts">Instant Video Call </span>
                 </a> */}
 
-                <a
+                {/* <a
                   href="https://www.whatsapp.com/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -404,7 +404,7 @@ const currentRoute = router.pathname;
                     }}
                   />
                   <span className="videoTexts">WhatsApp</span>
-                </a>
+                </a> */}
 
                 <Button
                   variant="contained"
@@ -414,7 +414,7 @@ const currentRoute = router.pathname;
                 >
                   {" "}
                   {/* {t("login")} */}
-                  Get in Touch
+                  {t("getintouch")}
                 </Button>
               </>
 
@@ -423,7 +423,7 @@ const currentRoute = router.pathname;
                 color="#003a37 "
                 edge="end"
                 onClick={handleDrawerToggle}
-                style={{background:"#5c4d44"}}
+                style={{ background: "#5c4d44" }}
                 sx={{ display: { md: "none" }, ...styles.menuButton }}
               >
                 <MenuIcon color="white" />
@@ -460,7 +460,7 @@ const currentRoute = router.pathname;
                     width={100}
                     height={20}
                   />
-              
+
                 </Box>
                 <IconButton onClick={handleDrawerToggle} sx={{ color: "#fff" }}>
                   <Close />
@@ -477,7 +477,7 @@ const currentRoute = router.pathname;
               {/* Navigation Links */}
               <List>
                 <ListItemButton
-                 onClick={() => {
+                  onClick={() => {
                     // scrollToSection("ecosystem");
                     router.push("/");
                   }}
@@ -485,7 +485,7 @@ const currentRoute = router.pathname;
                   <ListItemText primary="Home" />
                 </ListItemButton>
                 <ListItemButton
-                 onClick={() => router.push("/about-us")}
+                  onClick={() => router.push("/about-us")}
                 >
                   <ListItemText primary="About Us" />
                 </ListItemButton>
@@ -495,16 +495,16 @@ const currentRoute = router.pathname;
                   <ListItemText primary="Our Project" />
                 </ListItemButton>
                 <ListItemButton
-                    onClick={() => router.push("/blogs")}
+                  onClick={() => router.push("/blogs")}
                 >
                   <ListItemText primary="Media" />
                 </ListItemButton>
                 <ListItemButton
-              onClick={() => router.push("/contact-us")}
+                  onClick={() => router.push("/contact-us")}
                 >
                   <ListItemText primary="Contact" />
                 </ListItemButton>
-                
+
               </List>
             </Drawer>
           </Toolbar>

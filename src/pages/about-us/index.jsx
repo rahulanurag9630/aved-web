@@ -4,6 +4,7 @@ import { Container, Typography, Box, styled } from "@mui/material";
 import { apiRouterCall } from "@/api-services/service";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 import Description from "./Description";
 import Client from "../home/Client";
@@ -14,8 +15,6 @@ import WhychooseUs from "./WhychooseUs";
 const AboutUSBox = styled("Box")(({ theme }) => ({
   "& .aboutBannerImage": {
     zIndex: 1,
-    // overflow: "hidden",
-    zIndex: "999",
     position: "relative",
     backgroundSize: "cover",
     backgroundImage: "url(/images/About/about-bg.jpg)",
@@ -25,9 +24,9 @@ const AboutUSBox = styled("Box")(({ theme }) => ({
   "& .headingBox": {
     paddingBottom: "150px",
     paddingTop: "150px",
-    [theme.breakpoints.down("sm")]:{
-  paddingBottom: "47px",
-    paddingTop: "113px",
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: "47px",
+      paddingTop: "113px",
     },
   },
   "& .TopSection": {
@@ -37,14 +36,15 @@ const AboutUSBox = styled("Box")(({ theme }) => ({
       "rgba(0, 0, 0, 0.15) 0px 5px 15px, rgba(0, 0, 0, 0.15) 0px -5px 15px, rgba(0, 0, 0, 0.15) -5px 0px 15px, rgba(0, 0, 0, 0.15) 5px 0px 15px",
   },
 }));
+
 export default function AboutUS() {
   const [data, setData] = useState(null);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.user);
-  const { type } = router.query;
-  const fetchAboutUs = async (type) => {
-    console.log("kjjkdfkj", user?.userInfo?.token);
+  const { t } = useTranslation();
+
+  const fetchAboutUs = async () => {
     try {
       setLoading(true);
       const res = await apiRouterCall({
@@ -53,11 +53,8 @@ export default function AboutUS() {
         token: user?.userInfo?.token,
         id: "AboutUs",
       });
-      console.log(res);
       if (res?.data?.responseCode === 200) {
         setData(res?.data?.result || {});
-      } else {
-        console.log(res);
       }
     } catch (error) {
       console.error("Error while getting About Us data", error);
@@ -65,18 +62,10 @@ export default function AboutUS() {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchAboutUs();
   }, []);
-
-  const formatDate = (isoDate) => {
-    if (!isoDate) return "";
-    const date = new Date(isoDate);
-    return new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "long",
-    }).format(date);
-  };
 
   return (
     <AboutUSBox>
@@ -84,13 +73,13 @@ export default function AboutUS() {
         <Container style={{ position: "relative", zIndex: "999" }}>
           <Box className="headingBox">
             <Typography variant="h1" color="#fff">
-              About us
+              {t("about_heading")}
             </Typography>
           </Box>
 
           <Box
-            className=" displaySpacebetween"
-            style={{ alignItems: "end", flexWrap:"wrap" }}
+            className="displaySpacebetween"
+            style={{ alignItems: "end", flexWrap: "wrap" }}
             pb={5}
           >
             <Box className="displayStart" gap="15px">
@@ -100,7 +89,7 @@ export default function AboutUS() {
                 sx={{ cursor: "pointer", fontWeight: "600" }}
                 onClick={() => router.push("/")}
               >
-                Home
+                {t("breadcrumb_home")}
               </Typography>
 
               <Typography
@@ -109,7 +98,7 @@ export default function AboutUS() {
                 sx={{ cursor: "pointer", fontWeight: "600" }}
                 onClick={() => router.push("/about")}
               >
-                About us
+                {t("breadcrumb_about")}
               </Typography>
             </Box>
 
@@ -118,8 +107,7 @@ export default function AboutUS() {
               color="#FFFFFF99"
               style={{ maxWidth: "400px" }}
             >
-              Whether you’re building, remodeling, buying, or selling, we bring
-              seamless project execution under one roof.
+              {t("about_banner_description")}
             </Typography>
           </Box>
         </Container>
@@ -128,12 +116,12 @@ export default function AboutUS() {
       <Description />
       <VisionMissionSection />
       <Team />
-
       <WhychooseUs />
       <Client />
     </AboutUSBox>
   );
 }
+
 AboutUS.getLayout = function getLayout(page) {
   return <HomeLayout>{page}</HomeLayout>;
 };

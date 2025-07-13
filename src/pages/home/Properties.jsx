@@ -11,6 +11,8 @@ import {
 import AppContext from "@/context/AppContext";
 import ScrollAnimation from "react-animate-on-scroll";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
+
 const RulesComponent = styled(Box)(({ theme, color = "#f0f0f0" }) => ({
   "& .botmainBox": {
     marginTop: "70px",
@@ -25,28 +27,26 @@ const RulesComponent = styled(Box)(({ theme, color = "#f0f0f0" }) => ({
 
 const data = [
   {
-    title: "Marina Residence",
-    description: "Marina Residence offers a unique residential ",
+    title: "our_projects",
+    description: "explore_portfolio_projects",
     images: "/images/Properties/pro_1.jpg",
     className1: "straIcon1",
+    navigation: "/project",
   },
   {
-    title: "Marina Residence",
-    description: "Marina Residence offers a unique residential ",
+    title: "discover_blogs",
+    description: "blog_tips_description",
     images: "/images/Properties/pro_2.jpg",
     className1: "straIcon1",
-  },
-  {
-    title: "Marina Residence",
-    description: "Marina Residence offers a unique residential ",
-    images: "/images/Properties/pro_3.jpg",
-    className1: "straIcon1",
+    navigation: "/blogs",
   },
 ];
 
 export default function Properties() {
   const auth = useContext(AppContext);
   const router = useRouter();
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (auth?.topHeading) {
       auth?.setTopHeading("About");
@@ -56,64 +56,65 @@ export default function Properties() {
   return (
     <RulesComponent>
       <Box className="botmainBox main-sectionGap">
-        <Container className="">
+        <Container>
           <Box align="center" className="subSection">
             <ScrollAnimation animateIn="zoomIn">
               <Typography variant="h2" style={{ textTransform: "uppercase" }}>
-                real estate projects
+                {t("real_estate_projects")}
               </Typography>
             </ScrollAnimation>
           </Box>
+
           <Grid container spacing={3} style={{ position: "relative" }}>
             {data.map((item, index) => (
-              <>
-                <Grid item xs={12} md={4} key={index}>
-                  <ScrollAnimation
-                    animateIn="slideInLeft" // Animation type (slide from left)
-                    delay={index * 300} // Delay based on index for staggered animation
-                    animateOnce={true} // Only animate once when it first comes into view
-                  >
-                    <Box className="project-post-thumbnail">
-                      <img
-                        src={item.images}
-                        alt="Project"
-                        className="scroll-animate"
-                      />
-                    </Box>
+              <Grid item xs={12} md={6} key={index}>
+                <ScrollAnimation
+                  animateIn="slideInLeft"
+                  delay={index * 300}
+                  animateOnce={true}
+                >
+                  <Box className="project-post-thumbnail">
+                    <img
+                      src={item.images}
+                      alt="Project"
+                      className="scroll-animate"
+                    />
+                  </Box>
 
-                    <Box className="textContainer" align="center">
-                      <ScrollAnimation animateIn="slideInUp">
-                        <Tooltip title={item.title} placement="top" arrow>
-                          <Typography
-                            variant="h3"
-                            color="#000"
-                            style={{
-                              textTransform: "uppercase",
-                              fontWeight: "400",
-                            }}
-                          >
-                            {item.title}
-                          </Typography>
-                        </Tooltip>
-                      </ScrollAnimation>
-                      <Tooltip title={item.description} placement="top" arrow>
-                        <Typography variant="body2" color="#000">
-                          {item.description}
+                  <Box className="textContainer" align="center">
+                    <ScrollAnimation animateIn="slideInUp">
+                      <Tooltip title={t(item.title)} placement="top" arrow>
+                        <Typography
+                          variant="h3"
+                          color="#000"
+                          style={{
+                            textTransform: "uppercase",
+                            fontWeight: "400",
+                          }}
+                        >
+                          {t(item.title)}
                         </Typography>
                       </Tooltip>
-                      <Box mt={2}>
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => router.push("/project")}
-                        >
-                          Read more
-                        </Button>
-                      </Box>
+                    </ScrollAnimation>
+
+                    <Tooltip title={t(item.description)} placement="top" arrow>
+                      <Typography variant="body2" color="#000">
+                        {t(item.description)}
+                      </Typography>
+                    </Tooltip>
+
+                    <Box mt={2}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => router.push(item.navigation)}
+                      >
+                        {t("read_more")}
+                      </Button>
                     </Box>
-                  </ScrollAnimation>
-                </Grid>
-              </>
+                  </Box>
+                </ScrollAnimation>
+              </Grid>
             ))}
           </Grid>
         </Container>
