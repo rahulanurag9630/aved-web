@@ -2514,6 +2514,10 @@ svg:not(:root) {
   background: #ffffff38;
 }
 
+:dir(rtl) .centerborderfooter::after {
+  left: 60px;
+}
+
 .centerborderfooter::before {
   position: absolute;
   width: 1px;
@@ -2522,6 +2526,10 @@ svg:not(:root) {
   top: 41px;
   content: "";
   background: #ffffff38;
+}
+
+:dir(rtl) .centerborderfooter::before {
+  right: 150px;
 }
 
 .aboutBannerImage::after {

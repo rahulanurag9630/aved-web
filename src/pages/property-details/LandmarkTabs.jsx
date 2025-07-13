@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Box, Button, Typography, Stack, Grid } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export default function Landmarks({ data }) {
     const [activeTab, setActiveTab] = useState(0);
+    const { t } = useTranslation()
 
     const landmarks = data?.landmarks || [];
 
     return (
         <Box mt={6}>
             <Typography variant="h3" mb={3}>
-                Landmarks
+                {t("landmarks")}
             </Typography>
 
             {/* Tab Buttons */}
@@ -32,7 +34,7 @@ export default function Landmarks({ data }) {
                             },
                         }}
                     >
-                        {`Landmark ${index + 1}`}
+                        {`${t("landmark")} ${index + 1}`}
                     </Button>
                 ))}
             </Stack>
@@ -58,7 +60,7 @@ export default function Landmarks({ data }) {
                                 }}
                             />
                         </Grid>
-                        <Grid item lg={7} md={7} sm={12}>
+                        {/* <Grid item lg={7} md={7} sm={12}>
                             <Typography
                                 variant="body2"
                                 color="text.secondary"
@@ -67,7 +69,7 @@ export default function Landmarks({ data }) {
                                     __html: landmarks[activeTab].description,
                                 }}
                             />
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </Box>
             )}

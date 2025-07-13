@@ -1,3 +1,4 @@
+// components/NewFooter.js
 import {
   Box,
   Container,
@@ -8,6 +9,7 @@ import {
 } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import NextLink from "next/link";
+import { useTranslation } from "react-i18next";
 
 const socialLinks = [
   { name: "Facebook", href: "https://www.facebook.com/realestate.aved" },
@@ -21,11 +23,34 @@ const socialLinks = [
   },
   {
     name: "Twitter",
-    href: "https://x.com/avedrealestate?s=21&t=G6uZG2bWUKQ6oFJAJl8YNAhttps://x.com/avedrealestate?s=21&t=G6uZG2bWUKQ6oFJAJl8YNA",
+    href: "https://x.com/avedrealestate?s=21&t=G6uZG2bWUKQ6oFJAJl8YNA",
   },
 ];
 
 export default function NewFooter() {
+  const { t } = useTranslation();
+
+  const aboutLinks = [
+    { key: "footer_why_choose_us", href: "/about-us" },
+    { key: "footer_our_team", href: "/about-us" },
+    { key: "footer_properties", href: "/project" },
+    { key: "footer_partners", href: "/" },
+  ];
+
+  const projectLinks = [
+    { key: "footer_news_updates", href: "/blogs" },
+    { key: "footer_terms_conditions", href: "/term-condition" },
+    { key: "footer_privacy_policy", href: "/privacy-policy" },
+    { key: "footer_contact", href: "/contact-us" },
+  ];
+
+  const socialKeyMap = {
+    Facebook: "footer_social_facebook",
+    Instagram: "footer_social_instagram",
+    Linkedin: "footer_social_linkedin",
+    Twitter: "footer_social_twitter",
+  };
+
   return (
     <Box
       py={6}
@@ -39,7 +64,6 @@ export default function NewFooter() {
     >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          {/* Left Section - Logo and Description */}
           <Grid item xs={12} md={4} className="footerLogodescription">
             <Box display="flex" alignItems="center" mb={2}>
               <img
@@ -48,74 +72,36 @@ export default function NewFooter() {
                 className="footerLogo"
               />
             </Box>
-            <Typography
-              color="#ffffffdb"
-              variant="body2"
-              lineHeight="25px"
-              style={{ maxWidth: "308px" }}
-            >
-              We are creators of transformative spaces that inspire, innovate,
-              and endure.
+            <Typography color="#ffffffdb" variant="body2" lineHeight="25px" style={{ maxWidth: "308px" }}>
+              {t("footer_about_description")}
             </Typography>
           </Grid>
 
-          {/* Middle Columns */}
           <Grid item xs={12} md={4} className="centerborderfooter">
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Typography
-                  variant="body2"
-                  fontWeight="600"
-                  color="#fff"
-                  mb={1}
-                >
-                  About Us
+                <Typography variant="body2" fontWeight="600" color="#fff" mb={1}>
+                  {t("footer_about_us")}
                 </Typography>
-                {[
-                  { label: "Why Choose Us", href: "/about-us" },
-                  { label: "Our Team", href: "/about-us" },
-                  { label: "Properties", href: "/project" },
-                  { label: "Partners", href: "/" },
-                ].map((item) => (
-                  <Typography
-                    key={item.label}
-                    color="#fff"
-                    variant="body2"
-                    mb={0.5}
-                  >
+                {aboutLinks.map((item) => (
+                  <Typography key={item.key} color="#fff" variant="body2" mb={0.5}>
                     <NextLink href={item.href} passHref legacyBehavior>
                       <Link underline="hover" color="inherit">
-                        {item.label}
+                        {t(item.key)}
                       </Link>
                     </NextLink>
                   </Typography>
                 ))}
               </Grid>
-
               <Grid item xs={6}>
-                <Typography
-                  variant="body2"
-                  color="#fff"
-                  mb={1}
-                  fontWeight="600"
-                >
-                  Our Projects
+                <Typography variant="body2" fontWeight="600" color="#fff" mb={1}>
+                  {t("footer_our_projects")}
                 </Typography>
-                {[
-                  { label: "News & Updates", href: "/blogs" },
-                  { label: "Terms & Conditions", href: "/term-condition" },
-                  { label: "Privacy Policy", href: "/privacy-policy" },
-                  { label: "Contact", href: "/contact-us" },
-                ].map((item) => (
-                  <Typography
-                    key={item.label}
-                    variant="body2"
-                    color="#fff"
-                    mb={0.5}
-                  >
+                {projectLinks.map((item) => (
+                  <Typography key={item.key} color="#fff" variant="body2" mb={0.5}>
                     <NextLink href={item.href} passHref legacyBehavior>
                       <Link underline="hover" color="inherit">
-                        {item.label}
+                        {t(item.key)}
                       </Link>
                     </NextLink>
                   </Typography>
@@ -124,34 +110,23 @@ export default function NewFooter() {
             </Grid>
           </Grid>
 
-          {/* Right Section - Contact */}
           <Grid item xs={12} md={4}>
             <Typography
               variant="h3"
               color="#fff"
               mb={1}
-              style={{
-                borderBottom: "1px solid #ffffff1c",
-                width: "fit-content",
-              }}
+              style={{ borderBottom: "1px solid #ffffff1c", width: "fit-content" }}
             >
-              +966 56 658 9443
+              {t("footer_phone_number")}
             </Typography>
             <Typography
               variant="h3"
               color="#fff"
               mb={2}
-              style={{
-                borderBottom: "1px solid #ffffff1c",
-                width: "fit-content",
-              }}
+              style={{ borderBottom: "1px solid #ffffff1c", width: "fit-content" }}
             >
-              <Link
-                href="mailto:info@aved-sa.com"
-                underline="hover"
-                color="inherit"
-              >
-                info@aved-sa.com
+              <Link href="mailto:info@aved-sa.com" underline="hover" color="inherit">
+                {t("footer_email")}
               </Link>
             </Typography>
             <Box display="flex" gap={1}>
@@ -165,35 +140,21 @@ export default function NewFooter() {
                   variant="body2"
                   color="#ffffffdb"
                 >
-                  {name}
+                  {t(socialKeyMap[name])}
                 </Link>
               ))}
             </Box>
           </Grid>
         </Grid>
 
-        {/* Footer Bottom */}
-        <Box
-          mt={6}
-          pt={3}
-          borderTop="1px solid #eeeeee2b"
-          textAlign="center"
-          className="footercopy"
-        >
+        <Box mt={6} pt={3} borderTop="1px solid #eeeeee2b" textAlign="center" className="footercopy">
           <Typography variant="body2" color="#fff">
-            © 2025 <strong>Aved</strong>. All Rights Reserved.
+            {t("footer_copyright")}
           </Typography>
         </Box>
 
-        {/* Scroll to Top */}
         <IconButton
-          sx={{
-            position: "fixed",
-            bottom: 30,
-            right: 30,
-            bgcolor: "#fff",
-            boxShadow: 2,
-          }}
+          sx={{ position: "fixed", bottom: 30, right: 30, bgcolor: "#fff", boxShadow: 2 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <KeyboardArrowUpIcon style={{ color: "#000" }} />

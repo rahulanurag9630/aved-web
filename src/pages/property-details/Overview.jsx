@@ -8,56 +8,54 @@ import {
   MdOutlineCalendarToday,
   MdOutlineCropSquare,
 } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 const Overview = ({ data }) => {
+  const { t } = useTranslation();
+
   const details = [
     {
-      label: "Number ID",
+      label: t("numberId"),
       value: data?.apartment_number,
       icon: <MdOutlineConfirmationNumber size={24} color="rgb(92 77 68)" />,
     },
     {
-      label: "Type",
+      label: t("type"),
       value: data?.property_type,
       icon: <MdOutlineApartment size={24} color="rgb(92 77 68)" />,
     },
     {
-      label: "Build Year",
+      label: t("buildYear"),
       value: data?.year_of_built,
       icon: <MdOutlineCalendarToday size={24} color="rgb(92 77 68)" />,
     },
     {
-      label: "Bed",
+      label: t("bed"),
       value: data?.no_of_bedrooms,
       icon: <MdOutlineBed size={24} color="rgb(92 77 68)" />,
     },
     {
-      label: "Bath",
+      label: t("bath"),
       value: data?.no_of_bathrooms,
       icon: <MdOutlineBathroom size={24} color="rgb(92 77 68)" />,
     },
     {
-      label: "Size",
-      value: data?.apartment_number ? `${data.apartment_number} sqft` : null,
+      label: t("size"),
+      value: data?.area_sqft ? `${data.area_sqft} ${t("sqft")}` : null,
       icon: <MdOutlineCropSquare size={24} color="rgb(92 77 68)" />,
     },
   ];
 
-  // Filter out details with no value
   const filteredDetails = details.filter(
-    (item) =>
-      item.value !== null &&
-      item.value !== undefined &&
-      item.value !== ""
+    (item) => item.value !== null && item.value !== undefined && item.value !== ""
   );
 
-  // Don't render the section if nothing is available
   if (filteredDetails.length === 0) return null;
 
   return (
     <Box my={5}>
       <Typography variant="h3" fontWeight={600} mb={3}>
-        Overview
+        {t("overview")}
       </Typography>
       <Paper
         elevation={0}

@@ -13,9 +13,11 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const PropertyFilterDropdown = () => {
+  const { t } = useTranslation()
   const [openDropdown, setOpenDropdown] = useState(null);
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -165,13 +167,12 @@ const PropertyFilterDropdown = () => {
       if (min && max) return `AED ${min} - ${max}`;
       if (min) return `Min AED ${min}`;
       if (max) return `Max AED ${max}`;
-      return "Any";
+      return t("any");
     }
     return selectedOptions[category]?.length
       ? selectedOptions[category].join(", ")
-      : "Any";
+      : t("any");
   };
-
   return (
     <Container className="custumSelectBoxmain" maxWidth="lg" sx={{ padding: { xs: 1, sm: 2 } }}>
       <Box
@@ -215,7 +216,7 @@ const PropertyFilterDropdown = () => {
                 className="menunameText"
 
               >
-                Property Type
+                {t("property_type")}
               </Typography>
               <Typography
                 variant="body2"
@@ -274,7 +275,8 @@ const PropertyFilterDropdown = () => {
                   color: "#666",
                 }}
               >
-                Clear Selection
+                {t("clear_selection")}
+
               </Button>
             </Box>
           )}
@@ -305,7 +307,8 @@ const PropertyFilterDropdown = () => {
                 className="menunameText"
 
               >
-                Bedroom
+                {t("bedroom")}
+
               </Typography>
               <Typography
                 variant="body1"
@@ -393,7 +396,8 @@ const PropertyFilterDropdown = () => {
                 variant="caption"
                 className="menunameText"
               >
-                Price Range
+                {t("price_range")}
+
               </Typography>
               <Typography
                 variant="body1"
@@ -427,7 +431,8 @@ const PropertyFilterDropdown = () => {
               <Grid container spacing={1}>
                 <Grid item xs={6}>
                   <Typography variant="body2" mb={0.5} sx={{ fontSize: { xs: "0.8rem", sm: "1rem" } }}>
-                    Min Price (AED)
+                    {t("min_price")} (AED)
+
                   </Typography>
                   <TextField
                     fullWidth
@@ -441,7 +446,8 @@ const PropertyFilterDropdown = () => {
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="body2" mb={0.5} sx={{ fontSize: { xs: "0.8rem", sm: "1rem" } }}>
-                    Max Price (AED)
+                    {t("max_price")} (AED)
+
                   </Typography>
                   <TextField
                     fullWidth
@@ -463,7 +469,8 @@ const PropertyFilterDropdown = () => {
                   color: "#666",
                 }}
               >
-                Clear Selection
+                {t("clear_selection")}
+
               </Button>
             </Box>
           )}
@@ -493,7 +500,8 @@ const PropertyFilterDropdown = () => {
                 variant="caption"
                 className="menunameText"
               >
-                Availability
+                {t("availability")}
+
               </Typography>
               <Typography
                 variant="body1"
@@ -552,7 +560,8 @@ const PropertyFilterDropdown = () => {
                   color: "#666",
                 }}
               >
-                Clear Selection
+                {t("clear_selection")}
+
               </Button>
             </Box>
           )}
@@ -563,7 +572,7 @@ const PropertyFilterDropdown = () => {
         // ref={(el) => (dropdownRefs.current["community"] = el)}
         >
           <Button variant="contained" onClick={handleSearch} color="primary" className="serchCustom">
-            Search Properties
+            {t("search_properties")}
           </Button>
         </div>
       </Box>

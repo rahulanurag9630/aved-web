@@ -14,6 +14,7 @@ import ContactUs from "../home/ContactUs";
 import { HiOutlineMailOpen } from "react-icons/hi";
 import { MdOutlinePhoneCallback } from "react-icons/md";
 import { MdOutlineNotListedLocation } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 const ContactUSBox = styled("Box")(({ theme }) => ({
   "& .contctBannerImage": {
@@ -24,8 +25,6 @@ const ContactUSBox = styled("Box")(({ theme }) => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "top right",
     overflow: "hidden",
-
-    // Overlay using ::before
     "&::before": {
       content: '""',
       position: "absolute",
@@ -33,24 +32,20 @@ const ContactUSBox = styled("Box")(({ theme }) => ({
       left: 0,
       width: "100%",
       height: "100%",
-      backgroundColor: "rgba(0, 0, 0, 0.5)", // dark overlay
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
       zIndex: 2,
     },
-
-    // Optional: ensure child content is above overlay
     "& > *": {
       position: "relative",
       zIndex: 3,
     },
   },
-
   "& .headingBox": {
     paddingTop: "150px",
     [theme.breakpoints.down("sm")]: {
       paddingTop: "113px",
     },
   },
-
   "& .TopSection": {
     background: "#fff",
     color: "#000",
@@ -60,7 +55,7 @@ const ContactUSBox = styled("Box")(({ theme }) => ({
   "& .gettouchBox": {
     border: "1px solid #80808059",
     padding: "30px",
-    borderRadius: "5px,",
+    borderRadius: "5px",
     "& svg": {
       fontSize: "25px",
     },
@@ -78,6 +73,7 @@ const ContactUSBox = styled("Box")(({ theme }) => ({
 
 export default function Contactus() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -86,7 +82,7 @@ export default function Contactus() {
           <Container style={{ position: "relative", zIndex: "999" }}>
             <Box className="headingBox">
               <Typography variant="h1" color="#fff">
-                Get in touch
+                {t("getInTouch")}
               </Typography>
             </Box>
 
@@ -102,7 +98,7 @@ export default function Contactus() {
                   sx={{ cursor: "pointer", fontWeight: "600" }}
                   onClick={() => router.push("/")}
                 >
-                  Home
+                  {t("home")}
                 </Typography>
 
                 <Typography
@@ -111,7 +107,7 @@ export default function Contactus() {
                   sx={{ cursor: "pointer", fontWeight: "600" }}
                   onClick={() => router.push("/blog")}
                 >
-                  Get in touch
+                  {t("getInTouch")}
                 </Typography>
               </Box>
 
@@ -120,8 +116,7 @@ export default function Contactus() {
                 color="#FFFFFF99"
                 style={{ maxWidth: "400px" }}
               >
-                Our global real estate experts are here to help you in this
-                ever-changing market.
+                {t("getInTouchSubtitle")}
               </Typography>
             </Box>
           </Container>
@@ -132,35 +127,35 @@ export default function Contactus() {
             <Grid item lg={4} md={4} sm={12} xs={12}>
               <Box className="gettouchBox">
                 <HiOutlineMailOpen />
-                <Typography variant="h2">Support email</Typography>
+                <Typography variant="h2">{t("supportEmail")}</Typography>
                 <Typography variant="body2">info@aved-sa.com</Typography>
 
                 <Button variant="contained" color="secondary">
-                  Email Us
+                  {t("emailUs")}
                 </Button>
               </Box>
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
               <Box className="gettouchBox">
                 <MdOutlinePhoneCallback />
-                <Typography variant="h2">Phone number</Typography>
+                <Typography variant="h2">{t("phoneNumber")}</Typography>
                 <Typography variant="body2">+966 56 658 9443</Typography>
 
                 <Button variant="contained" color="secondary">
-                  Call Us
+                  {t("callUs")}
                 </Button>
               </Box>
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
               <Box className="gettouchBox">
                 <MdOutlineNotListedLocation />
-                <Typography variant="h2">Location</Typography>
+                <Typography variant="h2">{t("location")}</Typography>
                 <Typography variant="body2">
                   Jeddah | Prince Sultan Rd, AVED Building
                 </Typography>
 
                 <Button variant="contained" color="secondary">
-                  Visit Us
+                  {t("visitUs")}
                 </Button>
               </Box>
             </Grid>
@@ -176,7 +171,7 @@ export default function Contactus() {
               overflow: "hidden",
               width: "100%",
               zIndex: "999",
-              paddingTop: "30.25%", // 16:9 aspect ratio
+              paddingTop: "30.25%",
               borderRadius: 2,
               boxShadow: 2,
             }}

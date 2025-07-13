@@ -12,7 +12,8 @@ import { Paper, Box, Typography, useTheme } from "@mui/material";
 
 const Accordions = ({ data, index, expandedIndexes, toggleAccordion }) => {
   const theme = useTheme(); // Access Material-UI theme
-  const { question, answer } = data;
+  const { question, answer, question_ar, answer_ar } = data;
+
 
   const currentLang = i18n.language;
 
@@ -100,13 +101,13 @@ const Accordions = ({ data, index, expandedIndexes, toggleAccordion }) => {
               color="primary" // Hardcoded color can be replaced with theme color if needed
               sx={styles.accordionSummaryContent}
             >
-              {question}
+              {i18n.language === "en" ? question : question_ar}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Box
               sx={styles.accordionAns} // Updated to use sx
-              dangerouslySetInnerHTML={{ __html: answer }}
+              dangerouslySetInnerHTML={{ __html: i18n.language === "en" ? answer : answer_ar }}
             />
           </AccordionDetails>
         </Accordion>

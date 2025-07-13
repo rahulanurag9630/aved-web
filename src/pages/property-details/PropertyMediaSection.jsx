@@ -1,10 +1,12 @@
 import React from "react";
 import { Box, Typography, Grid } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 
 const PropertyMediaSection = ({ data }) => {
   const [lng, lat] = data?.location?.coordinates || [];
   const hasLocation = lat && lng;
-
+  const { t } = useTranslation()
   const hasVideo = !!data?.videoUrl;
   const hasAddress = !!data?.address;
 
@@ -12,7 +14,7 @@ const PropertyMediaSection = ({ data }) => {
     ? data.amenities
       .filter((item) => item?.title && item?.image)
       .map((item) => ({
-        label: item.title,
+        label: i18n.language === "en" ? item.title : item.title_ar,
         icon: <img src={item.image} alt={item.title} height={30} width={30} />,
       }))
     : [];
@@ -23,7 +25,7 @@ const PropertyMediaSection = ({ data }) => {
       {hasVideo && (
         <Box borderRadius={3} overflow="hidden" mb={6}>
           <Typography variant="h3" fontWeight={600} mb={3}>
-            Preview Video
+            {t("previewVideo")}
           </Typography>
           <Box
             style={{
@@ -50,7 +52,7 @@ const PropertyMediaSection = ({ data }) => {
       {features.length > 0 && (
         <>
           <Typography variant="h3" fontWeight={600} mb={3}>
-            Features & Amenities
+            {t("featuresAndAmenities")}
           </Typography>
           <Grid container spacing={2}>
             {features.map((item, index) => (
@@ -69,7 +71,7 @@ const PropertyMediaSection = ({ data }) => {
       {hasAddress || hasLocation ? (
         <>
           <Typography variant="h3" fontWeight={600} mb={3} mt={6}>
-            Location
+            {t("location")}
           </Typography>
           <Box style={{ background: "#f3f5f5", padding: "20px", borderRadius: "8px" }}>
             {hasAddress && (

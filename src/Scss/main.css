@@ -2316,6 +2316,14 @@ svg:not(:root) {
   background: rgba(255, 255, 255, 0.2196078431);
 }
 
+:dir(rtl) .centerborderfooter::after {
+  left: 60px;
+}
+
+:dir(rtl) .centerborderfooter::before {
+  right: 150px;
+}
+
 .centerborderfooter::before {
   position: absolute;
   width: 1px;

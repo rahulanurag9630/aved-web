@@ -414,7 +414,7 @@ export default function Header() {
                 >
                   {" "}
                   {/* {t("login")} */}
-                  Get in Touch
+                  {t("getintouch")}
                 </Button>
               </>
 
