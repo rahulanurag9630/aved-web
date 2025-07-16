@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Landmarks from "./LandmarkTabs";
 import i18n from "@/i18n";
+import Client from "./Client";
 
 const AboutUSBox = styled("Box")(({ theme }) => ({
   "& .aboutBannerImage": {
@@ -146,6 +147,7 @@ export default function PropertyDetails() {
             <PropertyMediaSection data={property} />
             <FloorPlanTabs data={property} />
             <Landmarks data={property} />
+            <Client clientData={property.partnersx} />
             <Box mt={6}>
               <Typography variant="h3" fontWeight={600} gutterBottom mb={3}>
                 {t("relatedListings")}

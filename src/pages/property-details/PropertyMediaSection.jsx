@@ -76,7 +76,8 @@ const PropertyMediaSection = ({ data }) => {
           <Box style={{ background: "#f3f5f5", padding: "20px", borderRadius: "8px" }}>
             {hasAddress && (
               <Typography fontWeight={400} mb={3}>
-                {data.address}
+                {i18n.language === "en" ? data?.address : data?.address_ar || data?.address}
+
               </Typography>
             )}
             {hasLocation && (
