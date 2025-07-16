@@ -58,7 +58,7 @@ export default function PropertyImageSlider({ data }) {
         <Box className="displayStart">
           <FaLocationDot style={{ color: "#000000a8" }} />
           <Typography variant="body2" color="#000000a8" fontWeight={600}>
-            {data?.address || "NA"}
+            {i18n.language === "en" ? data?.address : data?.address_ar || data?.address}
           </Typography>
         </Box>
       </Box>

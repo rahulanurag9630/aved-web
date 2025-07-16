@@ -100,9 +100,22 @@ const PropertyCard = ({ property }) => {
 
         {property.listing_type && (
           <span className={`featureText ${property.listing_type === "Sale" ? "saleText" : ""}`}>
-            {property.listing_type.toUpperCase()}
+            {i18n.language === "ar" ? (
+              property.listing_type === "Sale"
+                ? "للبيع"
+                : property.listing_type === "Rent"
+                  ? "للايجار"
+                  : "مميز"
+            ) : (
+              property.listing_type === "Sale"
+                ? "For Sale"
+                : property.listing_type === "Rent"
+                  ? "Rent"
+                  : "Featured"
+            )}
           </span>
         )}
+
       </Box>
 
       <CardContent
@@ -122,9 +135,20 @@ const PropertyCard = ({ property }) => {
 
         <Box className="displaySpacebetween" style={{ gap: "10px" }}>
           {hasPrice && (
-            <Typography variant="h5" color="primary" className="propertyprice">
-              AED {property.price_min.toLocaleString()} - {property.price_max.toLocaleString()}
+            <Typography
+              variant="h5"
+              color="primary"
+              className="propertyprice"
+              sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+            >
+              <img
+                src="/images/currency.svg"
+                alt="currency"
+                style={{ width: 20, height: 20, objectFit: 'contain' }}
+              />
+              {property.price_min.toLocaleString()} - {property.price_max.toLocaleString()}
             </Typography>
+
           )}
 
           <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
