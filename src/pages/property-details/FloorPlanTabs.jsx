@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { Box, Button, Typography, Stack, Grid } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export default function FloorPlanTabs({ data }) {
   const [activeTab, setActiveTab] = useState(0);
-
+  const { t } = useTranslation()
   const floorPlans = data?.floor_plan || [];
 
   return (
     <Box mt={6}>
       <Typography variant="h3" mb={3}>
-        Floor Plan
+        {t("floorPlan")}
       </Typography>
 
       {/* Tab Buttons */}
@@ -32,7 +33,7 @@ export default function FloorPlanTabs({ data }) {
               },
             }}
           >
-            {`Floor ${index + 1}`}
+            {`${t("floor")} ${index + 1}`}
           </Button>
         ))}
       </Stack>
@@ -47,26 +48,43 @@ export default function FloorPlanTabs({ data }) {
           }}
         >
           <Grid container spacing={2}>
-            <Grid item lg={5} md={5} sm={12}>
+            {/* Main Floor Image */}
+            <Grid item xs={12} md={5}>
               <Box
                 component="img"
-                src={floorPlans[activeTab].photo}
+                src={floorPlans[activeTab]?.photo}
                 alt={`Floor ${activeTab + 1}`}
                 sx={{
-                  width: "auto",
-                  maxWidth: "100%",
+                  width: "100%",
+                  borderRadius: 1,
+                  objectFit: "contain",
                 }}
               />
             </Grid>
-            <Grid item lg={7} md={7} sm={12}>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ flex: 1 }}
-                dangerouslySetInnerHTML={{
-                  __html: floorPlans[activeTab].description,
+
+            {/* Additional Images */}
+            <Grid item xs={12} md={7}>
+              <Box
+                sx={{
+                  columnCount: { xs: 1, sm: 2 },
+                  columnGap: "16px",
                 }}
-              />
+              >
+                {floorPlans[activeTab]?.images?.map((img, idx) => (
+                  <Box
+                    key={idx}
+                    component="img"
+                    src={img}
+                    alt={`Additional ${idx + 1}`}
+                    sx={{
+                      width: "100%",
+                      borderRadius: 1,
+                      marginBottom: "16px",
+                      breakInside: "avoid",
+                    }}
+                  />
+                ))}
+              </Box>
             </Grid>
           </Grid>
         </Box>

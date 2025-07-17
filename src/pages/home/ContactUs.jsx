@@ -4,18 +4,20 @@ import {
   Box,
   Grid,
   Typography,
-  TextField,
   Button,
   Paper,
+  TextField,
 } from "@mui/material";
 import ScrollAnimation from "react-animate-on-scroll";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { apiRouterCall } from "@/api-services/service";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 export default function ContactUs() {
-  const [formType, setFormType] = useState("quiry");
+  const { t } = useTranslation();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +25,6 @@ export default function ContactUs() {
     setIsSubmitting(true);
     try {
       setLoading(true);
-
       const bodyData = {
         name: values.name,
         email: values.email,
@@ -38,20 +39,19 @@ export default function ContactUs() {
       });
 
       if (res?.data?.responseCode === 200) {
-        toast.success("Your message has been sent successfully.");
+        toast.success(t("form_success_message"));
         formikHelpers.resetForm();
       } else {
-        toast.error(res?.data?.responseMessage || "Something went wrong.");
+        toast.error(res?.data?.responseMessage || t("form_error_generic"));
       }
     } catch (err) {
       console.error("Form submission error:", err);
-      toast.error("Server error. Please try again.");
+      toast.error(t("form_error_server"));
     } finally {
       setIsSubmitting(false);
       setLoading(false);
     }
   };
-
 
   const formik = useFormik({
     initialValues: {
@@ -62,18 +62,17 @@ export default function ContactUs() {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .max(60, "Name must be at most 60 characters")
-        .required("Please enter name."),
+        .max(60, t("name_length_validation"))
+        .required(t("name_required")),
       email: Yup.string()
-        .email("Invalid email address")
-        .required("Please enter email."),
+        .email(t("email_invalid"))
+        .required(t("email_required")),
       phoneNumber: Yup.string()
-        .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
-        .required("Please enter phone number."),
-      message: Yup.string().required("Please enter message."),
+        .matches(/^[0-9]{10}$/, t("phone_format_validation"))
+        .required(t("phone_required")),
+      message: Yup.string().required(t("message_required")),
     }),
     onSubmit: (values, formikHelpers) => handleSubmit(values, formikHelpers),
-
   });
 
   return (
@@ -113,7 +112,7 @@ export default function ContactUs() {
               className="getText"
               style={{ textTransform: "uppercase" }}
             >
-              Get specialist advice for residential, commercial or property
+              {t("contactus_heading")}
             </Typography>
           </ScrollAnimation>
         </Box>
@@ -124,21 +123,20 @@ export default function ContactUs() {
               <TextField
                 fullWidth
                 variant="outlined"
-                placeholder="Your Name"
+                placeholder={t("placeholder_name")}
                 name="name"
                 value={formik.values.name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.name && Boolean(formik.errors.name)}
                 helperText={formik.touched.name && formik.errors.name}
-                InputProps={{ disableUnderline: true }}
                 inputProps={{ maxLength: 60 }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
-                placeholder="Email"
+                placeholder={t("placeholder_email")}
                 variant="outlined"
                 name="email"
                 value={formik.values.email}
@@ -151,20 +149,25 @@ export default function ContactUs() {
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
-                placeholder="Phone Number*"
+                placeholder={t("placeholder_phone")}
                 variant="outlined"
                 name="phoneNumber"
                 value={formik.values.phoneNumber}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
-                helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                error={
+                  formik.touched.phoneNumber &&
+                  Boolean(formik.errors.phoneNumber)
+                }
+                helperText={
+                  formik.touched.phoneNumber && formik.errors.phoneNumber
+                }
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
-                placeholder="Message"
+                placeholder={t("placeholder_message")}
                 variant="outlined"
                 multiline
                 rows={2}
@@ -172,14 +175,16 @@ export default function ContactUs() {
                 value={formik.values.message}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.message && Boolean(formik.errors.message)}
+                error={
+                  formik.touched.message && Boolean(formik.errors.message)
+                }
                 helperText={formik.touched.message && formik.errors.message}
               />
             </Grid>
           </Grid>
 
           <Typography variant="body2" color="#808080" mt={2} mb={2}>
-            We're excited to connect with you! <br />
+            {t("contactus_description")}
           </Typography>
 
           <Button
@@ -188,7 +193,7 @@ export default function ContactUs() {
             color="secondary"
             disabled={isSubmitting || loading}
           >
-            {loading ? "Submitting..." : "Get A Call Back"}
+            {loading ? t("button_submitting") : t("button_submit")}
           </Button>
         </form>
       </Paper>

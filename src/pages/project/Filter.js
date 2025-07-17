@@ -13,16 +13,18 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useTranslation } from "next-i18next";
 
 export default function Filter({ setFilterData, filterOptions }) {
+  const { t } = useTranslation();
   const [formType, setFormType] = useState("quiry");
   const [filters, setFilters] = useState(filterOptions);
   const [open, setOpen] = useState(false);
 
   const handleInputChange = (e) => {
-    setFilterData((prev) => ({ ...prev, [name]: value }))
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
+    setFilterData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSearch = () => {
@@ -31,14 +33,14 @@ export default function Filter({ setFilterData, filterOptions }) {
 
   return (
     <>
-      <Typography variant="h4" mt={5}>Search Property</Typography>
+      <Typography variant="h4" mt={5}>{t("search_property")}</Typography>
       <Box className="fiterproperty">
         <Grid container spacing={1}>
           <Grid item xs={12} md={3}>
             <TextField
               fullWidth
               variant="outlined"
-              placeholder="Enter Keyword..."
+              placeholder={t("enter_keyword")}
               name="keyword"
               value={filters.keyword}
               onChange={handleInputChange}
@@ -60,36 +62,16 @@ export default function Filter({ setFilterData, filterOptions }) {
               onChange={handleInputChange}
               displayEmpty
               variant="outlined"
-              placeholder="All Cities"
-              type="search"
             >
               <MenuItem value="" disabled>
-                All Cities
+                {t("all_cities")}
               </MenuItem>
               <MenuItem value="city1">City 1</MenuItem>
               <MenuItem value="city2">City 2</MenuItem>
               <MenuItem value="city3">City 3</MenuItem>
             </Select>
           </Grid>
-          {/* <Grid item xs={12} md={2}>
-            <Select
-              fullWidth
-              name="area"
-              value={filters.area}
-              onChange={handleInputChange}
-              displayEmpty
-              variant="outlined"
-              placeholder="All Areas"
-              type="search"
-            >
-              <MenuItem value="" disabled>
-                All Areas
-              </MenuItem>
-              <MenuItem value="residential">Residential</MenuItem>
-              <MenuItem value="commercial">Commercial</MenuItem>
-              <MenuItem value="other">Other</MenuItem>
-            </Select>
-          </Grid> */}
+
           <Grid item xs={12} md={2}>
             <Select
               fullWidth
@@ -98,11 +80,9 @@ export default function Filter({ setFilterData, filterOptions }) {
               onChange={handleInputChange}
               displayEmpty
               variant="outlined"
-              placeholder="Type"
-              type="search"
             >
               <MenuItem value="" disabled>
-                Type
+                {t("type")}
               </MenuItem>
               <MenuItem value="Apartment">Apartment</MenuItem>
               <MenuItem value="Plot">Plot</MenuItem>
@@ -110,6 +90,7 @@ export default function Filter({ setFilterData, filterOptions }) {
               <MenuItem value="Villa">Villa</MenuItem>
             </Select>
           </Grid>
+
           <Grid item xs={12} md={2} sm={6}>
             <Select
               fullWidth
@@ -118,17 +99,16 @@ export default function Filter({ setFilterData, filterOptions }) {
               onChange={handleInputChange}
               displayEmpty
               variant="outlined"
-              placeholder="Status"
-              type="search"
             >
               <MenuItem value="" disabled>
-                Status
+                {t("status")}
               </MenuItem>
               <MenuItem value="Available">Available</MenuItem>
               <MenuItem value="Sold">Sold</MenuItem>
               <MenuItem value="Rented">Rented</MenuItem>
             </Select>
           </Grid>
+
           <Grid item xs={12} md={3}>
             <Box className="displayStart" style={{ gap: "10px" }}>
               <Button
@@ -139,7 +119,7 @@ export default function Filter({ setFilterData, filterOptions }) {
                 startIcon={<SettingsIcon />}
                 onClick={() => setOpen(!open)}
               >
-                {open ? "Advanced" : "Advanced"}
+                {t("advanced")}
               </Button>
               <Button
                 variant="contained"
@@ -147,20 +127,20 @@ export default function Filter({ setFilterData, filterOptions }) {
                 fullWidth
                 onClick={handleSearch}
               >
-                Search
+                {t("search")}
               </Button>
             </Box>
           </Grid>
         </Grid>
+
         <Collapse in={open}>
           <Box style={{ width: "100%", marginTop: "10px" }}>
             <Grid container spacing={1}>
-
               <Grid item xs={12} md={2.4} sm={6}>
                 <TextField
                   fullWidth
                   variant="outlined"
-                  placeholder="Bedrooms"
+                  placeholder={t("bedrooms")}
                   name="bedrooms"
                   value={filters.bedrooms}
                   onChange={handleInputChange}
@@ -171,7 +151,7 @@ export default function Filter({ setFilterData, filterOptions }) {
                 <TextField
                   fullWidth
                   variant="outlined"
-                  placeholder="Bathrooms"
+                  placeholder={t("bathrooms")}
                   name="bathrooms"
                   value={filters.bathrooms}
                   onChange={handleInputChange}
@@ -182,7 +162,7 @@ export default function Filter({ setFilterData, filterOptions }) {
                 <TextField
                   fullWidth
                   variant="outlined"
-                  placeholder="Min. Area"
+                  placeholder={t("min_area")}
                   name="minArea"
                   value={filters.minArea}
                   onChange={handleInputChange}
@@ -193,7 +173,7 @@ export default function Filter({ setFilterData, filterOptions }) {
                 <TextField
                   fullWidth
                   variant="outlined"
-                  placeholder="Max. Area"
+                  placeholder={t("max_area")}
                   name="maxArea"
                   value={filters.maxArea}
                   onChange={handleInputChange}
@@ -204,7 +184,7 @@ export default function Filter({ setFilterData, filterOptions }) {
                 <TextField
                   fullWidth
                   variant="outlined"
-                  placeholder="Max. Price"
+                  placeholder={t("max_price")}
                   name="maxPrice"
                   value={filters.maxPrice}
                   onChange={handleInputChange}
@@ -215,7 +195,7 @@ export default function Filter({ setFilterData, filterOptions }) {
                 <TextField
                   fullWidth
                   variant="outlined"
-                  placeholder="Min. Price"
+                  placeholder={t("min_price")}
                   name="minPrice"
                   value={filters.minPrice}
                   onChange={handleInputChange}

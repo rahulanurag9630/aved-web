@@ -5,6 +5,8 @@ import { Grid, Container, Box, styled, Typography } from "@mui/material";
 import BlogCard from "./BlogCard";
 import { apiRouterCall } from "@/api-services/service";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 
 const AboutUSBox = styled("Box")(({ theme }) => ({
   "& .aboutBannerImage": {
@@ -33,7 +35,7 @@ const AboutUSBox = styled("Box")(({ theme }) => ({
 }));
 
 export default function Blog() {
-
+  const { t } = useTranslation();
   const router = useRouter();
   const [blogData, setBlogData] = useState([]);
 
@@ -84,7 +86,7 @@ export default function Blog() {
         <Container style={{ position: "relative", zIndex: "999" }}>
           <Box className="headingBox">
             <Typography variant="h1" color="#fff">
-              Blog
+              {t("newsUpdates")}
             </Typography>
           </Box>
 
@@ -100,7 +102,7 @@ export default function Blog() {
                 sx={{ cursor: "pointer", fontWeight: "600" }}
                 onClick={() => router.push("/")}
               >
-                Home
+                {t("home")}
               </Typography>
 
               <Typography
@@ -109,7 +111,7 @@ export default function Blog() {
                 sx={{ cursor: "pointer", fontWeight: "600" }}
                 onClick={() => router.push("/blog")}
               >
-                Blog
+                {t("blog")}
               </Typography>
             </Box>
 
@@ -118,8 +120,7 @@ export default function Blog() {
               color="#FFFFFF99"
               style={{ maxWidth: "400px" }}
             >
-              Whether you’re building, remodeling, buying, or selling, we bring
-              seamless project execution under one roof.
+              {t("blogBannerDescription")}
             </Typography>
           </Box>
         </Container>
@@ -131,10 +132,10 @@ export default function Blog() {
             blogData.map((blog, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
                 <BlogCard
-                  image={blog.image || "/images/Project/pro_1.jpg"}
-                  title={blog.title}
+                  image={i18n.language === "en" ? blog.image : blog.image_ar || "/images/Project/pro_1.jpg"}
+                  title={i18n.language === "en" ? blog.title : blog.title_ar}
                   date={formatDate(blog.createdAt)}
-                  description={blog.description}
+                  description={i18n.language === "en" ? blog.description : blog.description_ar}
                   slug={blog.slug}
                   id={blog._id}
                 />
@@ -143,7 +144,7 @@ export default function Blog() {
           ) : (
             <Grid item xs={12}>
               <Typography variant="h6" align="center" color="textSecondary">
-                No blog posts available.
+                {t("noBlogPosts")}
               </Typography>
             </Grid>
           )}

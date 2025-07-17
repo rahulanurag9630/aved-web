@@ -7,6 +7,8 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
+import Head from "next/head";
+import { useTranslation } from "react-i18next";
 
 import PropertyImageSlider from "./PropertyImageSlider";
 import Overview from "./Overview";
@@ -16,6 +18,9 @@ import FloorPlanTabs from "./FloorPlanTabs";
 import { apiRouterCall } from "@/api-services/service";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Landmarks from "./LandmarkTabs";
+import i18n from "@/i18n";
+import Client from "./Client";
 
 const AboutUSBox = styled("Box")(({ theme }) => ({
   "& .aboutBannerImage": {
@@ -47,6 +52,7 @@ export default function PropertyDetails() {
   const [property, setProperty] = useState({});
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const { t } = useTranslation();
   const { propertyId } = router.query;
 
   const getProperties = async () => {
@@ -79,72 +85,79 @@ export default function PropertyDetails() {
   }, [propertyId]);
 
   return (
-    <AboutUSBox>
-      <Box className="aboutBannerImage">
-        <Container style={{ position: "relative", zIndex: "999" }}>
-          <Box className="headingBox">
-            <Typography variant="h1" color="#fff">
-              Property Details
-            </Typography>
-          </Box>
-
-          <Box
-            className=" displaySpacebetween"
-            style={{ alignItems: "end", flexWrap: "wrap" }}
-            pb={5}
-          >
-            <Box className="displayStart" gap="15px">
-              <Typography
-                variant="h6"
-                color="#FFFFFF99"
-                sx={{ cursor: "pointer", fontWeight: "600" }}
-                onClick={() => router.push("/")}
-              >
-                Home
-              </Typography>
-
-              <Typography
-                variant="h6"
-                color="#FFFFFF99"
-                sx={{ cursor: "pointer", fontWeight: "600" }}
-                onClick={() => router.push("/blog")}
-              >
-                Property Details
+    <>
+      <Head>
+        <title>{property?.seo_meta_titles || t("seoTitleFallback")} | YourSiteName</title>
+        <meta name="description" content={property?.overview} />
+      </Head>
+      <AboutUSBox>
+        <Box className="aboutBannerImage">
+          <Container style={{ position: "relative", zIndex: "999" }}>
+            <Box className="headingBox">
+              <Typography variant="h1" color="#fff">
+                {i18n.language === "en" ? property?.property_name : property?.property_name_ar}
               </Typography>
             </Box>
 
-            <Typography
-              variant="h3"
-              color="#FFFFFF99"
-              style={{ maxWidth: "400px" }}
+            <Box
+              className=" displaySpacebetween"
+              style={{ alignItems: "end", flexWrap: "wrap" }}
+              pb={5}
             >
-              Discover all the features, specifications, and highlights of this
-              listing.
-            </Typography>
-          </Box>
-        </Container>
-      </Box>
+              <Box className="displayStart" gap="15px">
+                <Typography
+                  variant="h6"
+                  color="#FFFFFF99"
+                  sx={{ cursor: "pointer", fontWeight: "600" }}
+                  onClick={() => router.push("/")}
+                >
+                  {t("home")}
+                </Typography>
 
-      {/* 🔄 Show loader while loading */}
-      {loading ? (
-        <Box display="flex" justifyContent="center" alignItems="center" height="50vh">
-          <CircularProgress size={60} />
+                <Typography
+                  variant="h6"
+                  color="#FFFFFF99"
+                  sx={{ cursor: "pointer", fontWeight: "600" }}
+                  onClick={() => router.push("/blog")}
+                >
+                  {t("breadcrumbPropertyDetails")}
+                </Typography>
+              </Box>
+
+              <Typography
+                variant="h3"
+                color="#FFFFFF99"
+                style={{ maxWidth: "400px" }}
+              >
+                {t("breadcrumbDescription")}
+              </Typography>
+            </Box>
+          </Container>
         </Box>
-      ) : (
-        <Container maxWidth="lg" className="propert-details">
-          <PropertyImageSlider data={property} />
-          <Overview data={property} />
-          <PropertyMediaSection data={property} />
-          <FloorPlanTabs data={property} />
-          <Box mt={6}>
-            <Typography variant="h3" fontWeight={600} gutterBottom mb={3}>
-              Related Listings
-            </Typography>
-            <PropertyCarousel />
+
+        {/* 🔄 Show loader while loading */}
+        {loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" height="50vh">
+            <CircularProgress size={60} />
           </Box>
-        </Container>
-      )}
-    </AboutUSBox>
+        ) : (
+          <Container maxWidth="lg" className="propert-details">
+            <PropertyImageSlider data={property} />
+            <Overview data={property} />
+            <PropertyMediaSection data={property} />
+            <FloorPlanTabs data={property} />
+            <Landmarks data={property} />
+            <Client clientData={property.partners} />
+            <Box mt={6}>
+              <Typography variant="h3" fontWeight={600} gutterBottom mb={3}>
+                {t("relatedListings")}
+              </Typography>
+              <PropertyCarousel />
+            </Box>
+          </Container>
+        )}
+      </AboutUSBox>
+    </>
   );
 }
 

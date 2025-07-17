@@ -3,10 +3,13 @@ import { useRouter } from "next/router";
 import { Box, Container, Typography } from "@mui/material";
 import TeamCard from "./TeamCard";
 import { apiRouterCall } from "@/api-services/service";
+import i18n from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 const TeamSection = () => {
   const router = useRouter();
   const [blogData, setBlogData] = useState([]);
+  const { t } = useTranslation()
 
   useEffect(() => {
     const fetchTeam = async () => {
@@ -37,7 +40,7 @@ const TeamSection = () => {
     <Container className="main-sectionGap">
       <Box align="center" className="subSection">
         <Typography variant="h2" style={{ textTransform: "uppercase" }}>
-          Members of the Board of Directors
+          {t("board_heading")}
         </Typography>
       </Box>
       <div
@@ -52,9 +55,9 @@ const TeamSection = () => {
           blogData.map((member) => (
             <TeamCard
               key={member._id}
-              role={member.name || "N/A"}
-              name={member.position || "N/A"}
-              description={member.thoughts || "N/A"}
+              role={i18n.language === "en" ? member.name : member.name_ar || "N/A"}
+              name={i18n.language === "en" ? member.position : member.position_ar || "N/A"}
+              description={i18n.language === "en" ? member.thoughts : member.thoughts_ar || "N/A"}
               image={member.image || "/images/default-team.png"} // fallback image if not present
             />
           ))

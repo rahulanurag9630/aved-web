@@ -20,6 +20,8 @@ import { TbBath, TbBallAmericanFootball } from "react-icons/tb";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { apiRouterCall } from "@/api-services/service";
+import i18n from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 // Global Loader Component
 const Loader = () => (
@@ -63,76 +65,94 @@ const NoProperties = () => (
 
 // Property Card Component
 const PropertyCard = ({ property }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const router = useRouter();
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const { t } = useTranslation()
 
   const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 1,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 1,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 1,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
+    superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 1 },
+    desktop: { breakpoint: { max: 3000, min: 1024 }, items: 1 },
+    tablet: { breakpoint: { max: 1024, min: 464 }, items: 1 },
+    mobile: { breakpoint: { max: 464, min: 0 }, items: 1 },
   };
 
-  return (
-    <Grid item xs={12} sm={6} md={4} style={{ cursor: "pointer" }}>
-      <Box sx={{ position: "relative", cursor: "pointer" }}>
-        <Carousel
-          responsive={responsive}
-          infinite
-          autoPlay={false}
-          autoPlaySpeed={3000}
-        >
-          {property.images.map((img, i) => (
-            <Box key={i}>
-              <CardMedia
-                component="img"
-                height="320"
-                image={img}
-                alt={`${property.property_name} image ${i + 1}`}
-                sx={{ width: "100%", objectFit: "cover" }}
-              />
-            </Box>
-          ))}
-        </Carousel>
+  const hasImages = Array.isArray(property.images) && property.images.length > 0;
+  const hasPrice = property?.price_min && property?.price_max;
 
-        {/* Tags */}
+  return (
+    <Grid item xs={12} sm={6} md={6} style={{ cursor: "pointer" }}>
+      <Box sx={{ position: "relative" }}>
+        {hasImages && (
+          <Carousel responsive={responsive} infinite autoPlay={false} autoPlaySpeed={3000}>
+            {property.images.map((img, i) => (
+              <Box key={i}>
+                <CardMedia
+                  component="img"
+                  height="320"
+                  image={img}
+                  alt={`${property.property_name} image ${i + 1}`}
+                  sx={{ width: "100%", objectFit: "cover" }}
+                />
+              </Box>
+            ))}
+          </Carousel>
+        )}
+
         {property.listing_type && (
-          <span
-            className={`featureText ${property.listing_type === "Sale" ? "saleText" : ""}`}
-          >
-            {property.listing_type.toUpperCase()}
+          <span className={`featureText ${property.listing_type === "Sale" ? "saleText" : ""}`}>
+            {i18n.language === "ar" ? (
+              property.listing_type === "Sale"
+                ? "للبيع"
+                : property.listing_type === "Rent"
+                  ? "للايجار"
+                  : "مميز"
+            ) : (
+              property.listing_type === "Sale"
+                ? "For Sale"
+                : property.listing_type === "Rent"
+                  ? "Rent"
+                  : "Featured"
+            )}
           </span>
         )}
+
       </Box>
 
       <CardContent
-        onClick={() => router.push({ pathname: `/property-details`, query: { propertyId: property?._id } })}
+        onClick={() =>
+          router.push({ pathname: `/property-details`, query: { propertyId: property?._id } })
+        }
         style={{
           boxShadow: "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px",
           marginTop: "-4px",
         }}
       >
-        <Typography variant="h6" color="#222222" fontWeight="500">
-          {property.property_name}
-        </Typography>
-        <Box className="displaySpacebetween" style={{ gap: "10px" }}>
-          <Typography variant="h5" color="primary" className="propertyprice">
-            AED {property.price.toLocaleString()}
+        {property.property_name && (
+          <Typography variant="h6" color="#222222" fontWeight="500">
+            {i18n.language === "en" ? property.property_name : property.property_name_ar}
           </Typography>
+        )}
+
+        <Box className="displaySpacebetween" style={{ gap: "10px" }}>
+          {hasPrice && (
+            <Typography
+              variant="h5"
+              color="primary"
+              className="propertyprice"
+              sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+            >
+              <img
+                src="/images/currency.svg"
+                alt="currency"
+                style={{ width: 20, height: 20, objectFit: 'contain' }}
+              />
+              {property.price_min.toLocaleString()} - {property.price_max.toLocaleString()}
+            </Typography>
+
+          )}
+
           <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-            {property.no_of_bedrooms !== null && (
+            {property.no_of_bedrooms > 0 && (
               <Box display="flex" alignItems="center" gap={1}>
                 <IoBedOutline style={{ color: "#636363" }} />
                 <Typography variant="body2" fontWeight="600" color="#636363">
@@ -140,7 +160,8 @@ const PropertyCard = ({ property }) => {
                 </Typography>
               </Box>
             )}
-            {property.no_of_bathrooms !== null && (
+
+            {property.no_of_bathrooms > 0 && (
               <Box display="flex" alignItems="center" gap={1}>
                 <TbBath style={{ color: "#636363" }} />
                 <Typography variant="body2" fontWeight="600" color="#636363">
@@ -148,19 +169,21 @@ const PropertyCard = ({ property }) => {
                 </Typography>
               </Box>
             )}
-            {property.parking_space !== null && (
+
+            {property.parking_space && (
               <Box display="flex" alignItems="center" gap={1}>
                 <IoCarOutline style={{ color: "#636363" }} />
                 <Typography variant="body2" fontWeight="600" color="#636363">
-                  {property.parking_space === "Yes" ? 1 : 0}
+                  {property.parking_space === "Yes" ? "1" : "0"}
                 </Typography>
               </Box>
             )}
+
             {property.area_sqft && (
               <Box display="flex" alignItems="center" gap={1}>
                 <TbBallAmericanFootball style={{ color: "#636363" }} />
                 <Typography variant="body2" fontWeight="600" color="#636363">
-                  {property.area_sqft} sqft
+                  {property.area_sqft} {t("sqft")}
                 </Typography>
               </Box>
             )}
@@ -170,6 +193,7 @@ const PropertyCard = ({ property }) => {
     </Grid>
   );
 };
+
 
 const PropertyCarousel = ({ filterOptions }) => {
   const [loading, setLoading] = useState(false);
@@ -263,19 +287,20 @@ const PropertyCarousel = ({ filterOptions }) => {
         <NoProperties />
       ) : (
         <>
-          <Grid container spacing={3}>
+          <Grid container spacing={10}>
             {properties.map((property) => (
               <PropertyCard key={property._id} property={property} />
             ))}
           </Grid>
           <Box mt={5} className="dislayCenter">
-            <Pagination
-              count={pagination.pages}
-              page={pagination.page}
-              onChange={handlePageChange}
-              showFirstButton
-              showLastButton
-            />
+            {pagination.pages > 1 &&
+              <Pagination
+                count={pagination.pages}
+                page={pagination.page}
+                onChange={handlePageChange}
+                showFirstButton
+                showLastButton
+              />}
           </Box>
         </>
       )}

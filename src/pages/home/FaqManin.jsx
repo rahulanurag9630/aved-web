@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ScrollAnimation from "react-animate-on-scroll";
 import {
   Box,
@@ -10,10 +10,11 @@ import {
 } from "@mui/material";
 import Accordions from "@/components/Accordions";
 import { useTranslation } from "react-i18next";
+import { apiRouterCall } from "@/api-services/service";
 
 const StyledFaqSection = styled(Box)(({ theme }) => ({
-    background:"#F8F9FB",
-  padding:"50px 0 80px",
+  background: "#F8F9FB",
+  padding: "50px 0 80px",
   "& .descriptionbox": {
     marginBottom: "40px",
   },
@@ -66,11 +67,28 @@ const FaqManin = () => {
   ];
   // State to track the currently expanded accordion index
   const [expandedIndex, setExpandedIndex] = useState(0); // Default to the first accordion being open
+  const [termsData, setTermsData] = useState([])
 
   const toggleAccordion = (index) => {
     // If the clicked accordion is already open, close it. Otherwise, open it.
     setExpandedIndex((prevIndex) => (prevIndex === index ? null : index));
   };
+  useEffect(() => {
+
+
+    const fetchTerms = async () => {
+      const res = await apiRouterCall({
+        endPoint: "getStaticContentByType",
+        paramsData: { contentType: "faq" },
+      });
+      console.log(res)
+      if (res?.data?.responseCode === 200) {
+        setTermsData(res.data.result?.docs);
+      }
+    };
+
+    fetchTerms();
+  }, []);
 
   return (
     <StyledFaqSection>
@@ -84,7 +102,7 @@ const FaqManin = () => {
         </Box>
         <Grid container spacing={0}>
           <Grid item xs={12} sm={12} md={12}>
-            {accordionData.map((data, index) => (
+            {termsData.map((data, index) => (
               <ScrollAnimation
                 animateIn="slideInDown"
                 delay={index * 300}
@@ -101,11 +119,11 @@ const FaqManin = () => {
             ))}
           </Grid>
         </Grid>
-        <Box align="center" mt={2}>
+        {/* <Box align="center" mt={2}>
           <Button variant="contained" color="secondary">
             Read more
           </Button>
-        </Box>
+        </Box> */}
       </Container>
     </StyledFaqSection>
   );
