@@ -2135,8 +2135,9 @@ svg:not(:root) {
 }
 
 .aboutusbanner {
-  margin-top: -289px;
-  padding: 40px;
+  margin-top: -270px;
+  padding: 40px 40px 40px 0px;
+
   background: #fff;
 }
 
