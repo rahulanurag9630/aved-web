@@ -126,14 +126,9 @@ const Slider = () => {
         <Box className="gradientOverlay" />
 
         <Container>
-          <Box className="slide-caption" sx={{ right: i18n.language === "ar" ? "2.5%" : null }}>
+          <Box className="slide-caption" sx={{ right: i18n.language === "ar" ? "2.5%" : null, display: "flex", flexDirection: "column", gap: "30px" }}>
             <div style={{ float: i18n.language === "ar" ? "right" : null, }}>
-              <img
-                src="/images/Slider/GP-LOGO-2.png"
-                width="151px"
-                height="40px"
-                className="slideTopLogo"
-              />
+
               <img
                 src="/images/Slider/NEWLY_LAUNCHED_EN.svg"
                 alt="Newly Launched"
@@ -182,6 +177,7 @@ const Slider = () => {
                 zIndex: 100,
                 position: "relative",
                 pointerEvents: "auto",
+                width: "20%"
               }} // 👈 Add this line
             >
               {t("learn_more")}
