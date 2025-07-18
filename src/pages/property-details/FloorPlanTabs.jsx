@@ -1,12 +1,18 @@
-import React, { useState } from "react";
-import { Box, Button, Typography, Stack, Grid } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Button, Modal, Typography, Stack, Grid, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function FloorPlanTabs({ data }) {
   const [activeTab, setActiveTab] = useState(0);
   const { t } = useTranslation()
   const floorPlans = data?.floor_plan || [];
+  const [previewImage, setPreviewImage] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
+  useEffect(() => {
+    setPreviewImage(floorPlans[activeTab]?.photo || null);
+  }, [activeTab, floorPlans]);
   return (
     <Box mt={6}>
       <Typography variant="h3" mb={3}>
@@ -37,8 +43,6 @@ export default function FloorPlanTabs({ data }) {
           </Button>
         ))}
       </Stack>
-
-      {/* Tab Content */}
       {floorPlans.length > 0 && (
         <Box
           sx={{
@@ -52,14 +56,17 @@ export default function FloorPlanTabs({ data }) {
             <Grid item xs={12} md={5}>
               <Box
                 component="img"
-                src={floorPlans[activeTab]?.photo}
+                src={previewImage}
                 alt={`Floor ${activeTab + 1}`}
                 sx={{
                   width: "100%",
                   borderRadius: 1,
                   objectFit: "contain",
+                  cursor: "pointer",
                 }}
+                onClick={() => setOpenModal(true)} // Open modal on click
               />
+
             </Grid>
 
             {/* Additional Images */}
@@ -76,11 +83,17 @@ export default function FloorPlanTabs({ data }) {
                     component="img"
                     src={img}
                     alt={`Additional ${idx + 1}`}
+                    onClick={() => setPreviewImage(img)} // 🔁 Click to change preview
                     sx={{
                       width: "100%",
                       borderRadius: 1,
                       marginBottom: "16px",
                       breakInside: "avoid",
+                      cursor: "pointer", // 👈 makes it look clickable
+                      transition: "0.3s",
+                      "&:hover": {
+                        opacity: 0.8,
+                      },
                     }}
                   />
                 ))}
@@ -89,6 +102,48 @@ export default function FloorPlanTabs({ data }) {
           </Grid>
         </Box>
       )}
+      <Modal open={openModal} onClose={() => setOpenModal(false)}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            maxWidth: "90vw",
+            maxHeight: "90vh",
+            outline: "none",
+          }}
+        >
+          <IconButton
+            onClick={() => setOpenModal(false)}
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              backgroundColor: "#fff",
+              zIndex: 1,
+              "&:hover": {
+                backgroundColor: "#eee",
+              },
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <Box
+            component="img"
+            src={previewImage}
+            alt="Enlarged preview"
+            sx={{
+              width: "100%",
+              height: "420px",
+              borderRadius: 1,
+              objectFit: "contain",
+            }}
+          />
+        </Box>
+      </Modal>
     </Box>
+
+
   );
 }

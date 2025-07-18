@@ -4,7 +4,8 @@ import { Box, Container, Typography, Divider, styled } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
+import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 const AboutUSBox = styled("Box")(({ theme }) => ({
   "& .aboutBannerImage": {
     zIndex: "999",
@@ -30,6 +31,7 @@ const AboutUSBox = styled("Box")(({ theme }) => ({
 }));
 
 export default function BlogDetail() {
+   const { t } = useTranslation();
   const router = useRouter();
   const { id } = router.query;
 
@@ -134,7 +136,7 @@ export default function BlogDetail() {
           })}
         </Typography>
         <Typography variant="h3" color="#5c4d44" fontWeight="bold" gutterBottom>
-          {blog.title}
+      {i18n.language === "en" ? blog.title : blog.title_ar}
         </Typography>
 
         <Box
@@ -149,7 +151,7 @@ export default function BlogDetail() {
         >
           <Image
             src={blog.image || "/images/Project/pro_1.jpg"}
-            alt={blog.title}
+            alt={i18n.language === "en" ? blog.title : blog.title_ar}
             fill
             style={{ objectFit: "cover" }}
             sizes="(max-width: 600px) 100vw, 100vw"
@@ -162,7 +164,7 @@ export default function BlogDetail() {
           sx={{ whiteSpace: "pre-line", lineHeight: 1.8 }}
           dangerouslySetInnerHTML={{
             __html:
-              blog.description
+              i18n.language === "en" ? blog.description : blog.description_ar
           }}
         >
         </Typography>

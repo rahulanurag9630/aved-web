@@ -88,7 +88,7 @@ const PropertyCard = ({ property }) => {
               <Box key={i}>
                 <CardMedia
                   component="img"
-                  height="320"
+                  height="380"
                   image={img}
                   alt={`${property.property_name} image ${i + 1}`}
                   sx={{ width: "100%", objectFit: "cover" }}
