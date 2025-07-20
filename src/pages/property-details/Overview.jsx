@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Grid, Paper } from "@mui/material";
+import { Box, Typography, Grid, Paper, Button } from "@mui/material";
 import {
   MdOutlineConfirmationNumber,
   MdOutlineBed,
@@ -80,6 +80,35 @@ const Overview = ({ data }) => {
             </Grid>
           ))}
         </Grid>
+        {data?.brochure && (
+          <Box mt={6}>
+            <Typography variant="h5" color={"#000"} gutterBottom fontWeight={600}>
+              {t("brochure_title") || " Brochure"}
+            </Typography>
+            <Button
+              variant="contained"
+              href={data?.brochure}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                // backgroundColor: "#2D2E83",
+                // color: "#fff",
+                fontWeight: 600,
+                px: 4,
+                py: 1.2,
+                borderRadius: "30px",
+                fontSize: "15px",
+                textTransform: "none",
+                boxShadow: "0px 4px 20px rgba(0,0,0,0.1)",
+                "&:hover": {
+                  // backgroundColor: "#1e1f66",
+                },
+              }}
+            >
+              📄 {t("brochure_title") || "View Brochure"}
+            </Button>
+          </Box>
+        )}
       </Paper>
     </Box>
   );

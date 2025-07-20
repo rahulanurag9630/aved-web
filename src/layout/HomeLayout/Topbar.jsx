@@ -351,7 +351,7 @@ export default function Header() {
                           color: "#000", // default color
                         },
                         "&:hover .MuiBox-root, &:focus .MuiBox-root": {
-                          color: "#fff", // on hover or focus
+                           color: "#020202", // on hover or focus
                         },
                       }}
                     >
