@@ -1,8 +1,10 @@
 import { Box, Typography, Button, Stack } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 export default function BlogCard({ image, title, date, description, slug, id }) {
+  const { t } = useTranslation()
   function getTextSnippetFromHTML(html, limit = 65) {
     if (!html) return "";
 
@@ -85,7 +87,7 @@ export default function BlogCard({ image, title, date, description, slug, id }) 
           style={{ padding: "8px 18px", fontSize: "10px" }}
           onClick={() => router.push({ pathname: `/bogs-details`, query: { id } })} // Correct placement of onClick
         >
-          Read More
+          {t("read_more")}
         </Button>
       </Box>
     </Box>

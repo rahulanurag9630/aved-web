@@ -1,5 +1,5 @@
 "use client";
-import { Box, Container, styled, Typography } from "@mui/material";
+import { Box, Button, Container, styled, Typography } from "@mui/material";
 import React from "react";
 import Marquee from "react-fast-marquee";
 import ScrollAnimation from "react-animate-on-scroll";
@@ -12,7 +12,7 @@ const MarquemainBox = styled("Box")(({ theme }) => ({
 
 
 
-export default function Client({ clientData }) {
+export default function Client({ clientData, brochure }) {
     const { t } = useTranslation();
 
     return (
@@ -51,6 +51,36 @@ export default function Client({ clientData }) {
                         </Marquee>
                     </Box>
                 </Container>
+                {/* 🔹 View Brochure Section */}
+                {brochure && (
+                    <Box align="center" mt={6}>
+                        <Typography variant="h5" gutterBottom fontWeight={600}>
+                            {t("brochure_title") || " Brochure"}
+                        </Typography>
+                        <Button
+                            variant="contained"
+                            href={brochure}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            sx={{
+                                // backgroundColor: "#2D2E83",
+                                // color: "#fff",
+                                fontWeight: 600,
+                                px: 4,
+                                py: 1.2,
+                                borderRadius: "30px",
+                                fontSize: "15px",
+                                textTransform: "none",
+                                boxShadow: "0px 4px 20px rgba(0,0,0,0.1)",
+                                "&:hover": {
+                                    backgroundColor: "#1e1f66",
+                                },
+                            }}
+                        >
+                            📄 {t("view_brochure") || "View Brochure"}
+                        </Button>
+                    </Box>
+                )}
             </Box>
         </MarquemainBox>
     );

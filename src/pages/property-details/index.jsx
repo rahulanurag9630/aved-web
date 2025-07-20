@@ -147,7 +147,7 @@ export default function PropertyDetails() {
             <PropertyMediaSection data={property} />
             <FloorPlanTabs data={property} />
             <Landmarks data={property} />
-            <Client clientData={property.partners} />
+            <Client clientData={property.partners} brochure={property.brochure} />
             <Box mt={6}>
               <Typography variant="h3" fontWeight={600} gutterBottom mb={3}>
                 {t("relatedListings")}

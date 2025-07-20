@@ -47,7 +47,7 @@ const TeamSection = () => {
         style={{
           display: "grid",
           gap: "30px",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: "repeat(3, 1fr)",
         }}
         className="teamGridBox"
       >
@@ -59,6 +59,9 @@ const TeamSection = () => {
               name={i18n.language === "en" ? member.position : member.position_ar || "N/A"}
               description={i18n.language === "en" ? member.thoughts : member.thoughts_ar || "N/A"}
               image={member.image || "/images/default-team.png"} // fallback image if not present
+              facebook={member?.facebook}
+              instagram={member?.instagram}
+              linkedin={member?.linkedin}
             />
           ))
         ) : (

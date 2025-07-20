@@ -70,15 +70,24 @@ export default function Blog() {
     if (isNaN(date)) return "";
 
     const day = date.getDate().toString().padStart(2, "0");
-    const monthNames = [
+
+    const monthNamesEn = [
       "Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
+
+    const monthNamesAr = [
+      "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+      "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+    ];
+
+    const monthNames = i18n.language === "ar" ? monthNamesAr : monthNamesEn;
     const month = monthNames[date.getMonth()];
     const year = date.getFullYear();
 
     return `${day} ${month} ${year}`;
   }
+
 
   return (
     <AboutUSBox>

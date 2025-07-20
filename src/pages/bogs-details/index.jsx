@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "@/i18n";
+
 const AboutUSBox = styled("Box")(({ theme }) => ({
   "& .aboutBannerImage": {
     zIndex: "999",
@@ -31,21 +32,17 @@ const AboutUSBox = styled("Box")(({ theme }) => ({
 }));
 
 export default function BlogDetail() {
-   const { t } = useTranslation();
+  const { t } = useTranslation();
   const router = useRouter();
   const { id } = router.query;
 
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  console.log(router.query, id)
 
   useEffect(() => {
-    console.log(router.query)
-
     const fetchBlog = async () => {
       try {
-        console.log(router.query)
         const res = await apiRouterCall({
           method: "GET",
           endPoint: "getBlogById",
@@ -55,27 +52,28 @@ export default function BlogDetail() {
         if (res?.data?.responseCode === 200 && res?.data?.result) {
           setBlog(res.data.result);
         } else {
-          console.error("Failed to fetch blog:", res?.data?.responseMessage);
           setError(res?.data?.responseMessage || "Blog not found.");
         }
       } catch (error) {
-        console.error("Error fetching blog:", error);
         setError("Error fetching blog data.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBlog();
-
-  }, []);
+    if (id) fetchBlog();
+  }, [id]);
 
   if (loading) {
-    return <Typography align="center" mt={10}>Loading...</Typography>;
+    return <Typography align="center" mt={10}>{t("loading")}</Typography>;
   }
 
   if (error || !blog) {
-    return <Typography align="center" mt={10} color="error.main">{error || "No blog found."}</Typography>;
+    return (
+      <Typography align="center" mt={10} color="error.main">
+        {error || t("noBlogFound")}
+      </Typography>
+    );
   }
 
   return (
@@ -85,12 +83,12 @@ export default function BlogDetail() {
           <Container style={{ position: "relative", zIndex: "999" }}>
             <Box className="headingBox">
               <Typography variant="h1" color="#fff">
-                Recent Articles
+                {t("recentArticles")}
               </Typography>
             </Box>
 
             <Box
-              className=" displaySpacebetween"
+              className="displaySpacebetween"
               style={{ alignItems: "end", flexWrap: "wrap" }}
               pb={5}
             >
@@ -101,7 +99,7 @@ export default function BlogDetail() {
                   sx={{ cursor: "pointer", fontWeight: "600" }}
                   onClick={() => router.push("/")}
                 >
-                  Home
+                  {t("home")}
                 </Typography>
 
                 <Typography
@@ -110,7 +108,7 @@ export default function BlogDetail() {
                   sx={{ cursor: "pointer", fontWeight: "600" }}
                   onClick={() => router.push("/blog")}
                 >
-                  Blog Details
+                  {t("blogDetails")}
                 </Typography>
               </Box>
 
@@ -119,8 +117,7 @@ export default function BlogDetail() {
                 color="#FFFFFF99"
                 style={{ maxWidth: "400px" }}
               >
-                Whether you’re building, remodeling, buying, or selling, we
-                bring seamless project execution under one roof.
+                {t("blogSubtitle")}
               </Typography>
             </Box>
           </Container>
@@ -129,14 +126,18 @@ export default function BlogDetail() {
 
       <Container maxWidth="md" sx={{ py: 6 }}>
         <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-          {new Date(blog.createdAt).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+          {new Date(blog.createdAt).toLocaleDateString(
+            i18n.language === "ar" ? "ar-EG" : "en-US",
+            {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }
+          )}
         </Typography>
+
         <Typography variant="h3" color="#5c4d44" fontWeight="bold" gutterBottom>
-      {i18n.language === "en" ? blog.title : blog.title_ar}
+          {i18n.language === "en" ? blog.title : blog.title_ar}
         </Typography>
 
         <Box
@@ -164,10 +165,11 @@ export default function BlogDetail() {
           sx={{ whiteSpace: "pre-line", lineHeight: 1.8 }}
           dangerouslySetInnerHTML={{
             __html:
-              i18n.language === "en" ? blog.description : blog.description_ar
+              i18n.language === "en"
+                ? blog.description
+                : blog.description_ar,
           }}
-        >
-        </Typography>
+        ></Typography>
 
         <Divider sx={{ my: 4 }} />
       </Container>

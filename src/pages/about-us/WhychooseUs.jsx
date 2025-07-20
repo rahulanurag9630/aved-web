@@ -60,6 +60,7 @@ export default function WhychooseUs() {
                         alignItems: "flex-start",
                         padding: 2,
                         height: "100%",
+                        background: "#ffffff",
                         borderRadius: 2,
                         gap: 2,
                         transition: "transform 0.3s ease",
