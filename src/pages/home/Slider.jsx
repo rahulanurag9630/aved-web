@@ -177,7 +177,8 @@ const Slider = () => {
                 zIndex: 100,
                 position: "relative",
                 pointerEvents: "auto",
-                width: "20%"
+                width: "20%",
+                minWidth: "200px"
               }} // 👈 Add this line
             >
               {t("learn_more")}

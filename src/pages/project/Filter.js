@@ -54,7 +54,7 @@ export default function Filter({ setFilterData, filterOptions }) {
               }}
             />
           </Grid>
-          <Grid item xs={12} md={2}>
+          {/* <Grid item xs={12} md={2}>
             <Select
               fullWidth
               name="city"
@@ -70,7 +70,7 @@ export default function Filter({ setFilterData, filterOptions }) {
               <MenuItem value="city2">City 2</MenuItem>
               <MenuItem value="city3">City 3</MenuItem>
             </Select>
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={2}>
             <Select

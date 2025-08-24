@@ -21,6 +21,8 @@ import { useRouter } from "next/router";
 import Landmarks from "./LandmarkTabs";
 import i18n from "@/i18n";
 import Client from "./Client";
+import BedroomTabs from "./BedroomsTab";
+import BathroomTabs from "./BathroomsTabs";
 
 const AboutUSBox = styled("Box")(({ theme }) => ({
   "& .aboutBannerImage": {
@@ -146,7 +148,9 @@ export default function PropertyDetails() {
             <Overview data={property} />
             <PropertyMediaSection data={property} />
             <FloorPlanTabs data={property} />
-            <Landmarks data={property} />
+            {/* <BedroomTabs data={property} />
+              <BathroomTabs data={property} /> */}
+
             <Client clientData={property.partners} brochure={property.brochure} />
             <Box mt={6}>
               <Typography variant="h3" fontWeight={600} gutterBottom mb={3}>

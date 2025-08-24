@@ -351,7 +351,7 @@ export default function Header() {
                           color: "#000", // default color
                         },
                         "&:hover .MuiBox-root, &:focus .MuiBox-root": {
-                           color: "#020202", // on hover or focus
+                          color: "#020202", // on hover or focus
                         },
                       }}
                     >
@@ -410,12 +410,16 @@ export default function Header() {
                   variant="contained"
                   color="primary"
                   sx={styles.authButtons}
-                  onClick={() => router.push("/contact-us")}
+                  onClick={() =>
+                    window.open(
+                      "https://api.whatsapp.com/send/?phone=966566589443&text=Hello%21+I%E2%80%99m+interested+in+your+real+estate+services.+Could+you+please+share+more+details+about+your+available+properties%3F&type=phone_number&app_absent=0",
+                      "_blank" // open in new tab
+                    )
+                  }
                 >
-                  {" "}
-                  {/* {t("login")} */}
                   {t("getintouch")}
                 </Button>
+
               </>
 
               {/* Mobile Menu */}

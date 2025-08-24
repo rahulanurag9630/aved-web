@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Container, styled, Typography } from "@mui/material";
+import { Box, Container, styled, Typography } from "@mui/material";
 import React from "react";
 import Marquee from "react-fast-marquee";
 import ScrollAnimation from "react-animate-on-scroll";
@@ -10,10 +10,13 @@ const MarquemainBox = styled("Box")(({ theme }) => ({
     zIndex: "999",
 }));
 
-
-
 export default function Client({ clientData, brochure }) {
     const { t } = useTranslation();
+
+    // ✅ If no data, don't render anything
+    if (!clientData || clientData.length === 0) {
+        return null;
+    }
 
     return (
         <MarquemainBox>
@@ -51,8 +54,6 @@ export default function Client({ clientData, brochure }) {
                         </Marquee>
                     </Box>
                 </Container>
-                {/* 🔹 View Brochure Section */}
-
             </Box>
         </MarquemainBox>
     );

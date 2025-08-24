@@ -1,12 +1,30 @@
 @charset "UTF-8";
 
+@font-face {
+  font-family: "DIN Next";
+  src: url("/fonts/DINNext-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   margin: 0;
   overflow-x: hidden;
-  font-family: "Lato", sans-serif !important;
+  font-family: "Montserrat", "DIN Next", sans-serif !important;
   background: #fff !important;
   color: rgb(0, 0, 0);
 }
+
+/* English text → Montserrat */
+:dir(ltr) {
+  font-family: "Montserrat", sans-serif !important;
+}
+
+/* Arabic text → DIN Next */
+:dir(rtl) {
+  font-family: "DIN Next", sans-serif !important;
+}
+
 
 html[dir=rtl] {
   direction: rtl;

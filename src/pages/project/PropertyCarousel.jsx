@@ -183,7 +183,7 @@ const PropertyCard = ({ property }) => {
               <Box display="flex" alignItems="center" gap={1}>
                 <TbBallAmericanFootball style={{ color: "#636363" }} />
                 <Typography variant="body2" fontWeight="600" color="#636363">
-                  {property.area_sqft} {t("sqft")}
+                  {property.area_sqft} m²
                 </Typography>
               </Box>
             )}

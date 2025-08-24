@@ -41,7 +41,7 @@ const Overview = ({ data }) => {
     },
     {
       label: t("size"),
-      value: data?.area_sqft ? `${data.area_sqft} ${t("sqft")}` : null,
+      value: data?.area_sqft ? `${data.area_sqft} m²` : null,
       icon: <MdOutlineCropSquare size={24} color="rgb(92 77 68)" />,
     },
   ];

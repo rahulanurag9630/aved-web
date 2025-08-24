@@ -683,6 +683,11 @@
   "bookmark": "Bookmark",
   "risk": "Risk",
   "strategy": "Strategy",
+  "groundFloor": "Ground Floor",
+  "firstFloor": "First Floor",
+  "secondFloor": "Second Floor",
+  "thirdFloor": "Third Floor",
+  "thFloor": "th Floor",
   "investment_type": {
     "monthly": "Monthly",
     "quarterly": "Quarterly",
