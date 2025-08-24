@@ -49,7 +49,7 @@ export default function HomePage() {
         <AboutUs />
         <Properties />
         <Client />
-        {/* <Property /> */}
+        <Property />
         <ContactUs />
         <FaqManin />
         {/* <Box id="ourcompany">

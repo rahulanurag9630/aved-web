@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import HomeLayout from "@/layout/HomeLayout";
-import { Grid, Container, Box, styled, Typography } from "@mui/material";
+import { Grid, Container, Box, styled, Typography, CircularProgress } from "@mui/material";
 import BlogCard from "./BlogCard";
 import { apiRouterCall } from "@/api-services/service";
 import { useRouter } from "next/router";
@@ -38,6 +38,7 @@ export default function Blog() {
   const { t } = useTranslation();
   const router = useRouter();
   const [blogData, setBlogData] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ loader state
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -58,6 +59,8 @@ export default function Blog() {
         }
       } catch (error) {
         console.error("Error fetching blogs:", error);
+      } finally {
+        setLoading(false); // ✅ stop loader
       }
     };
 
@@ -87,7 +90,6 @@ export default function Blog() {
 
     return `${day} ${month} ${year}`;
   }
-
 
   return (
     <AboutUSBox>
@@ -136,28 +138,34 @@ export default function Blog() {
       </Box>
 
       <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Grid container spacing={4}>
-          {blogData.length > 0 ? (
-            blogData.map((blog, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
-                <BlogCard
-                  image={i18n.language === "en" ? blog.image : blog.image_ar || "/images/Project/pro_1.jpg"}
-                  title={i18n.language === "en" ? blog.title : blog.title_ar}
-                  date={formatDate(blog.createdAt)}
-                  description={i18n.language === "en" ? blog.description : blog.description_ar}
-                  slug={blog.slug}
-                  id={blog._id}
-                />
+        {loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Grid container spacing={4}>
+            {blogData.length > 0 ? (
+              blogData.map((blog, index) => (
+                <Grid item xs={12} sm={6} md={3} key={index}>
+                  <BlogCard
+                    image={i18n.language === "en" ? blog.image : blog.image_ar || "/images/Project/pro_1.jpg"}
+                    title={i18n.language === "en" ? blog.title : blog.title_ar}
+                    date={formatDate(blog.createdAt)}
+                    description={i18n.language === "en" ? blog.description : blog.description_ar}
+                    slug={blog.slug}
+                    id={blog._id}
+                  />
+                </Grid>
+              ))
+            ) : (
+              <Grid item xs={12}>
+                <Typography variant="h6" align="center" color="textSecondary">
+                  {t("noBlogPosts")}
+                </Typography>
               </Grid>
-            ))
-          ) : (
-            <Grid item xs={12}>
-              <Typography variant="h6" align="center" color="textSecondary">
-                {t("noBlogPosts")}
-              </Typography>
-            </Grid>
-          )}
-        </Grid>
+            )}
+          </Grid>
+        )}
       </Container>
     </AboutUSBox>
   );

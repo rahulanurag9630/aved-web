@@ -21,7 +21,7 @@ export default function AboutUs() {
       <Container>
         <Box>
           <img
-            src="/images/About/aboutlanding.jpg"
+            src="/images/About/aboutlanding.png"
             alt="Image"
             style={{ width: "100%" }}
           />
