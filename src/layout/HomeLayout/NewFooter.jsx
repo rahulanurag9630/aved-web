@@ -8,27 +8,37 @@ import {
   IconButton,
 } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import NextLink from "next/link";
 import { useTranslation } from "react-i18next";
+import { apiRouterCall } from "@/api-services/service";
+import React, { useEffect, useState } from "react";
 
 const socialLinks = [
-  { name: "Facebook", href: "https://www.facebook.com/realestate.aved" },
+  { name: "Facebook", href: "https://www.facebook.com/realestate.aved", icon: <FacebookIcon /> },
   {
     name: "Instagram",
     href: "https://www.instagram.com/avedrealestate/?igsh=ZXN6cHc5MHRzMnRt#",
+    icon: <InstagramIcon />,
   },
   {
     name: "Linkedin",
     href: "https://www.linkedin.com/company/avedrealestate/?viewAsMember=true",
+    icon: <LinkedInIcon />,
   },
   {
     name: "Twitter",
     href: "https://x.com/avedrealestate?s=21&t=G6uZG2bWUKQ6oFJAJl8YNA",
+    icon: <TwitterIcon />,
   },
 ];
 
 export default function NewFooter() {
   const { t } = useTranslation();
+  const [color, setColor] = useState("#5c4d44");
 
   const aboutLinks = [
     { key: "footer_why_choose_us", href: "/about-us" },
@@ -44,12 +54,21 @@ export default function NewFooter() {
     { key: "footer_contact", href: "/contact-us" },
   ];
 
-  const socialKeyMap = {
-    Facebook: "footer_social_facebook",
-    Instagram: "footer_social_instagram",
-    Linkedin: "footer_social_linkedin",
-    Twitter: "footer_social_twitter",
-  };
+  useEffect(() => {
+    const fetchColor = async () => {
+      try {
+        const res = await apiRouterCall({
+          method: "GET",
+          endPoint: "getColor",
+        });
+
+        setColor(res?.data?.result?.code || "#5c4d44");
+      } catch (error) {
+        console.error("Error fetching footer color:", error);
+      }
+    };
+    fetchColor();
+  }, []);
 
   return (
     <Box
@@ -57,13 +76,14 @@ export default function NewFooter() {
       sx={{
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
-        background: "#5c4d44",
+        background: color,
         margin: "20px",
       }}
       className="main-sectionGap maifootersection"
     >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
+          {/* Logo and description */}
           <Grid item xs={12} md={4} className="footerLogodescription">
             <Box display="flex" alignItems="center" mb={2}>
               <img
@@ -72,11 +92,17 @@ export default function NewFooter() {
                 className="footerLogo"
               />
             </Box>
-            <Typography color="#ffffffdb" variant="body2" lineHeight="25px" style={{ maxWidth: "308px" }}>
+            <Typography
+              color="#ffffffdb"
+              variant="body2"
+              lineHeight="25px"
+              style={{ maxWidth: "308px" }}
+            >
               {t("footer_about_description")}
             </Typography>
           </Grid>
 
+          {/* About & Projects */}
           <Grid item xs={12} md={4} className="centerborderfooter">
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -110,6 +136,7 @@ export default function NewFooter() {
             </Grid>
           </Grid>
 
+          {/* Contact & Social */}
           <Grid item xs={12} md={4}>
             <Typography
               variant="h3"
@@ -129,30 +156,40 @@ export default function NewFooter() {
                 {t("footer_email")}
               </Link>
             </Typography>
-            <Box display="flex" gap={1}>
-              {socialLinks.map(({ name, href }) => (
-                <Link
+
+            {/* Social Media Icons */}
+            <Box display="flex" gap={1} mt={2}>
+              {socialLinks.map(({ name, href, icon }) => (
+                <IconButton
                   key={name}
+                  component="a"
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  underline="hover"
-                  variant="body2"
-                  color="#ffffffdb"
+                  sx={{ color: "#fff", fontSize: "2rem" }} // 👈 increased size
+
                 >
-                  {t(socialKeyMap[name])}
-                </Link>
+                  {React.cloneElement(icon, { sx: { fontSize: 35 } })} {/* 👈 set size here */}
+                </IconButton>
               ))}
             </Box>
           </Grid>
         </Grid>
 
-        <Box mt={6} pt={3} borderTop="1px solid #eeeeee2b" textAlign="center" className="footercopy">
+        {/* Copyright */}
+        <Box
+          mt={6}
+          pt={3}
+          borderTop="1px solid #eeeeee2b"
+          textAlign="center"
+          className="footercopy"
+        >
           <Typography variant="body2" color="#fff">
             {t("footer_copyright")}
           </Typography>
         </Box>
 
+        {/* Scroll to top button */}
         <IconButton
           sx={{ position: "fixed", bottom: 30, right: 30, bgcolor: "#fff", boxShadow: 2 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

@@ -57,4 +57,4 @@ export default function Client({ clientData, brochure }) {
             </Box>
         </MarquemainBox>
     );
-}
+}   

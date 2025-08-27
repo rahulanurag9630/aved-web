@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import Loader from "@/components/PageLoader/Loader";
 import { useTranslation } from "react-i18next";
 import i18n from "@/i18n";
+import { Diversity2 } from "@mui/icons-material";
 
 const bannerData = {
   desktop: [
@@ -126,8 +127,8 @@ const Slider = () => {
         <Box className="gradientOverlay" />
 
         <Container>
-          <Box className="slide-caption" sx={{ right: i18n.language === "ar" ? "2.5%" : null, display: "flex", flexDirection: "column", gap: "30px" }}>
-            <div style={{ float: i18n.language === "ar" ? "right" : null, }}>
+          <Box className="slide-caption" sx={{ right: i18n.language === "ar" ? "2.5%" : null, display: "flex", flexDirection: "column", gap: "30px", direction: i18n.language === "ar" ? "rtl" : null }}>
+            <div>
 
               <img
                 src="/images/Slider/NEWLY_LAUNCHED_EN.svg"
@@ -139,10 +140,7 @@ const Slider = () => {
               />
             </div>{i18n.language === "ar" && (
               <>
-                <br />
-                <br />
-                <br />
-                <br />
+
                 <br />
               </>
             )}
@@ -152,14 +150,23 @@ const Slider = () => {
                 variant="h2"
                 color="#fff"
                 className="bannerHeadingText"
+                dir={i18n.language === "ar" ? "rtl" : "ltr"}
+                sx={{
+                  fontFamily: i18n.language === "en" ? "Montserrat, sans-serif !important" : "DIN Next, sans-serif !important",
+                }}
               >
                 {i18n.language === "en" ? item?.property_name : item?.property_name_ar}
               </Typography>
+
               <Typography
                 variant="body2"
                 mt={1}
                 color="#fff"
+                dir={i18n.language === "ar" ? "rtl" : "ltr"}
                 className="bannerDescriptionText"
+                sx={{
+                  fontFamily: i18n.language === "en" ? "Montserrat, sans-serif !important" : "DIN Next, sans-serif !important",
+                }}
               >
                 {i18n.language === "en"
                   ? item?.overview?.length > 180
@@ -168,9 +175,9 @@ const Slider = () => {
                   : item?.overview_ar?.length > 180
                     ? item.overview_ar.substring(0, 180) + "..."
                     : item?.overview_ar}
-
               </Typography>
             </ScrollAnimation>
+
 
             <Button variant="contained" onClick={() => router.push({ pathname: `/property-details`, query: { propertyId: item?._id } })}
               color="primary" sx={{
@@ -178,7 +185,8 @@ const Slider = () => {
                 position: "relative",
                 pointerEvents: "auto",
                 width: "20%",
-                minWidth: "200px"
+                minWidth: "200px",
+                float: i18n.language === "ar" ? "right" : null
               }} // 👈 Add this line
             >
               {t("learn_more")}

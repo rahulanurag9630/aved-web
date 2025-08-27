@@ -36,6 +36,7 @@ import i18n from "@/i18n";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import { apiRouterCall } from "@/api-services/service";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -179,7 +180,7 @@ export default function Header() {
   const [homeAnchorEl, setHomeAnchorEl] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openServices, setOpenServices] = useState(false);
-
+  const [color, setColor] = useState("#5c4d44")
   const toggleServices = () => {
     setOpenServices(!openServices);
   };
@@ -222,12 +223,29 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const fetchColor = async () => {
+      try {
+        const res = await apiRouterCall({
+          method: "GET",
+          endPoint: "getColor",
+        });
+
+        setColor(res?.data?.result?.code || "#5c4d44")
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      } finally {
+      }
+    };
+    fetchColor()
+
+  }, [])
   return (
     <StyledAppBar position="fixed">
       <AppBar
         position="static"
         style={{
-          backgroundColor: scrolled ? "rgb(92, 77, 68)" : "transparent",
+          backgroundColor: scrolled ? color : "transparent",
           boxShadow: "none",
           padding: "2px 0",
           transition: "background-color 0.3s ease-in-out",
@@ -459,8 +477,8 @@ export default function Header() {
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <Image
-                    src="/images/Landing/mobViewLogo.png"
-                    alt="Lifesafe Logo"
+                    src="/images/logowhite.svg"
+                    alt="aved logo"
                     width={100}
                     height={20}
                   />
