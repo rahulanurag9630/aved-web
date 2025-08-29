@@ -1,6 +1,5 @@
 "use client";
 import { Box, Typography } from "@mui/material";
-import Image from "next/image";
 import { FaFacebookF } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa6";
 import { FaLinkedinIn } from "react-icons/fa";
@@ -15,7 +14,7 @@ const TeamCard = ({ name, description, image, role, facebook, instagram, linkedi
     <div className="cardBox">
       <div className="card">
         <div className="card">
-          <Image src={image} alt={name} fill className="cardImage" />
+          <img src={image} alt={name} className="cardImage" />
         </div>
         <div className="cardContent">
           <Typography variant="h2" fontSize="20px" lineHeight="30px">

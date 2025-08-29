@@ -1,10 +1,10 @@
 // const url = "http://172.16.1.53:3044/api/v1";
 // const url = "https://nodepune-investment.mobiloitte.io/api/v1"
 // const url = "http://172.16.6.114:3044/api/v1";
-export const url = "http://localhost:2211/api/v1"
+// export const url = "http://localhost:2211/api/v1"
 // export const url = "https://aved-node.onrender.com/api/v1"  
 // export const url = "http://3.20.115.19:2211/api/v1" // live
-// export const url = "https://api.aved-sa.com/api/v1"
+export const url = "https://api.aved-sa.com/api/v1"
 
 
 

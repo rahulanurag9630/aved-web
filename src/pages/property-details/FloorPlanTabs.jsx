@@ -71,52 +71,63 @@ export default function PropertyTabs({ data }) {
     return `${index}${suffix} ${t("floor")}`;
   };
 
+  // ✅ Common style for child tabs
+  // ✅ Child tab style (grey + smaller)
+  const childTabStyle = (active) => ({
+    borderRadius: "4px",
+    textTransform: "none",
+    fontWeight: 500,
+    fontSize: "14px",
+    px: 2,
+    py: 0.5,
+    border: "1px solid #c7c7c7",
+    backgroundColor: active ? "#9e9e9e" : "#f0f0f0",
+    color: active ? "#fff" : "#333",
+    "&:hover": {
+      backgroundColor: active ? "#757575" : "#e0e0e0",
+    },
+  });
+
+
   return (
     <Box mt={6}>
-      {/* Main Tabs */}
+      {/* ================= MAIN TABS ================= */}
       <Tabs
         value={activeMainTab}
         onChange={(e, val) => setActiveMainTab(val)}
         sx={{
-          mb: 2, "& .MuiTab-root": {
+          mb: 2,
+          "& .MuiTab-root": {
             color: "#000",
+            fontWeight: "bold",
+            fontSize: "16px",
           },
           "& .Mui-selected": {
             color: "#fff !important",
+            backgroundColor: "#5c4d44",
+            borderRadius: "8px 8px 0 0",
           },
           "& .MuiTabs-indicator": {
-            backgroundColor: "#fff",
+            backgroundColor: "#5c4d44",
+            height: "4px",
           },
         }}
       >
         {floorPlans?.length > 0 && <Tab label={t("floorPlan")} />}
         {bedrooms?.length > 0 && <Tab label={t("bedrooms")} />}
-        {bathrooms?.length > 0 && < Tab label={t("bathrooms")} />}
+        {bathrooms?.length > 0 && <Tab label={t("bathrooms")} />}
       </Tabs>
 
       {/* =================== FLOOR PLANS =================== */}
       {activeMainTab === 0 && floorPlans.length > 0 && (
         <>
+          {/* CHILD TABS (Floor selection) */}
           <Stack direction="row" spacing={2} mb={3} flexWrap="wrap">
             {floorPlans.map((plan, index) => (
               <Button
                 key={index}
-                variant={activeFloorTab === index ? "contained" : "outlined"}
                 onClick={() => setActiveFloorTab(index)}
-                sx={{
-                  borderRadius: "2px",
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  px: 3,
-                  backgroundColor:
-                    activeFloorTab === index ? "#5c4d44" : "#fff",
-                  color: activeFloorTab === index ? "#fff" : "#1A1F36",
-                  borderColor: "#C0C0C0",
-                  "&:hover": {
-                    backgroundColor:
-                      activeFloorTab === index ? "#1A1F36" : "#f5f5f5",
-                  },
-                }}
+                sx={childTabStyle(activeFloorTab === index)}
               >
                 {getFloorLabel(index)}
               </Button>
@@ -226,26 +237,13 @@ export default function PropertyTabs({ data }) {
       {/* =================== BEDROOMS =================== */}
       {activeMainTab === 1 && bedrooms.length > 0 && (
         <>
+          {/* CHILD TABS (Bedroom selection) */}
           <Stack direction="row" spacing={2} mb={3} flexWrap="wrap">
             {bedrooms.map((room, index) => (
               <Button
                 key={index}
-                variant={activeBedroomTab === index ? "contained" : "outlined"}
                 onClick={() => setActiveBedroomTab(index)}
-                sx={{
-                  borderRadius: "2px",
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  px: 3,
-                  backgroundColor:
-                    activeBedroomTab === index ? "#5c4d44" : "#fff",
-                  color: activeBedroomTab === index ? "#fff" : "#1A1F36",
-                  borderColor: "#C0C0C0",
-                  "&:hover": {
-                    backgroundColor:
-                      activeBedroomTab === index ? "#1A1F36" : "#f5f5f5",
-                  },
-                }}
+                sx={childTabStyle(activeBedroomTab === index)}
               >
                 {`${t("bedroom")} ${index + 1}`}
               </Button>
@@ -358,26 +356,13 @@ export default function PropertyTabs({ data }) {
       {/* =================== BATHROOMS =================== */}
       {activeMainTab === 2 && bathrooms.length > 0 && (
         <>
+          {/* CHILD TABS (Bathroom selection) */}
           <Stack direction="row" spacing={2} mb={3} flexWrap="wrap">
             {bathrooms.map((room, index) => (
               <Button
                 key={index}
-                variant={activeBathroomTab === index ? "contained" : "outlined"}
                 onClick={() => setActiveBathroomTab(index)}
-                sx={{
-                  borderRadius: "2px",
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  px: 3,
-                  backgroundColor:
-                    activeBathroomTab === index ? "#5c4d44" : "#fff",
-                  color: activeBathroomTab === index ? "#fff" : "#1A1F36",
-                  borderColor: "#C0C0C0",
-                  "&:hover": {
-                    backgroundColor:
-                      activeBathroomTab === index ? "#1A1F36" : "#f5f5f5",
-                  },
-                }}
+                sx={childTabStyle(activeBathroomTab === index)}
               >
                 {`${t("bathroom")} ${index + 1}`}
               </Button>

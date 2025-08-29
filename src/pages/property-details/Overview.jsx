@@ -96,7 +96,6 @@ const Overview = ({ data }) => {
                 fontWeight: 600,
                 px: 4,
                 py: 1.2,
-                borderRadius: "30px",
                 fontSize: "15px",
                 textTransform: "none",
                 boxShadow: "0px 4px 20px rgba(0,0,0,0.1)",
@@ -105,7 +104,7 @@ const Overview = ({ data }) => {
                 },
               }}
             >
-              📄 {t("brochure_title") || "View Brochure"}
+              📄
             </Button>
           </Box>
         )}
