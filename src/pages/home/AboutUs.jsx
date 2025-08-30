@@ -21,7 +21,7 @@ export default function AboutUs() {
       <Container>
         <Box>
           <img
-            src="/images/About/aboutlanding.png"
+            src="/images/About/aboutlanding.webp"
             alt="Image"
             style={{ width: "100%" }}
           />
